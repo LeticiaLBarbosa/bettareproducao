@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<reproducoes>
+    <reproducao>
+        <ID>R0001</ID>
+        <infoFemea></infoFemea>
+        <infoMacho></infoMacho>
+        <informacoes></informacoes>
+        <linhagemFemea></linhagemFemea>
+        <linhagemMacho></linhagemMacho>
+        <linhagemMaeFemea></linhagemMaeFemea>
+        <linhagemMaeMacho></linhagemMaeMacho>
+        <linhagemPaiFemea></linhagemPaiFemea>
+        <linhagemPaiMacho></linhagemPaiMacho>
+    </reproducao>
+</reproducoes>

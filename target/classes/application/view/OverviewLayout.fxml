@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ReproducaoOverviewController">
+   <children>
+      <ScrollPane fitToWidth="true" layoutY="14.0" prefHeight="700.0" prefWidth="612.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <Pane prefHeight="1000.0" prefWidth="600.0">
+               <children>
+                  <Label layoutX="159.0" layoutY="15.0" text="FICHA DE ACOMPANHAMENTO DE REPRODUÇÃO" />
+                  <Label fx:id="idLabel" layoutX="245.0" layoutY="41.0" text="ID da Reproduçao" />
+                  <Label layoutX="111.0" layoutY="65.0" text="Pais do Macho" />
+                  <Label layoutX="415.0" layoutY="65.0" text="Pais da Fêmea" />
+                  <Label fx:id="linhagemPaiMachoLabel" layoutX="39.0" layoutY="90.0" text="(LINHAGEM)" />
+                  <Label fx:id="linhagemPaiFemeaLabel" layoutX="490.0" layoutY="90.0" text="(LINHAGEM)" />
+                  <Label fx:id="linhagemMachoLabel" layoutX="89.0" layoutY="218.0" text="(Linhagem do Macho)" />
+                  <Label fx:id="linhagemFemeaLabel" layoutX="396.0" layoutY="218.0" text="(Linhagem da Fêmea)" />
+                  <Label fx:id="linhagemMaeMachoLabel" layoutX="188.0" layoutY="90.0" text="(LINHAGEM)" />
+                  <Label fx:id="linhagemMaeFemeaLabel" layoutX="345.0" layoutY="90.0" text="(LINHAGEM)" />
+                  <ImageView fx:id="paiMachoImageView" fitHeight="100.0" fitWidth="142.5" layoutX="5.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="maeMachoImageView" fitHeight="100.0" fitWidth="142.5" layoutX="150.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="maeFemeaImageView" fitHeight="100.0" fitWidth="142.5" layoutX="452.5" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="paiFemeaImageView" fitHeight="100.0" fitWidth="142.5" layoutX="307.5" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="femeaImageView" fitHeight="150.0" fitWidth="290.0" layoutX="5.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="machoImageView" fitHeight="150.0" fitWidth="290.0" layoutX="295.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
+                  <TextField alignment="CENTER" layoutX="218.0" layoutY="37.0" promptText="ID de Reprodução" visible="false" />
+                  <Label fx:id="infoMachoLabel" layoutX="72.0" layoutY="392.0" text="(F? / Idade / Reprodução nº?)" />
+                  <Label fx:id="infoFemeaLabel" layoutX="375.0" layoutY="392.0" text="(F? / Idade / Reprodução nº?)" />
+                  <Label layoutX="10.0" layoutY="418.0" text="Data de Início:" />
+                  <Label layoutX="10.0" layoutY="440.0" text="Retirada da fêmea:" />
+                  <Label layoutX="10.0" layoutY="462.0" text="Retirada do macho:" />
+                  <Label layoutX="10.0" layoutY="484.0" text="Informações adicionais:" />
+                  <Label fx:id="inicioLabel" layoutX="95.58" layoutY="418.0" text="DD/MM/AAAA" />
+                  <Label fx:id="retiradaFemeaLabel" layoutX="118.97" layoutY="440.0" text="DD/MM/AAAA" />
+                  <Label fx:id="retiradaMachoLabel" layoutX="122.95" layoutY="462.0" text="DD/MM/AAAA" />
+                  <TextArea fx:id="aditionalInfoTextArea" editable="false" layoutX="10.0" layoutY="501.0" prefHeight="42.0" prefWidth="572.0" />
+                  <Label layoutX="278.0" layoutY="555.0" text="RESULTADOS" />
+                  <GridPane fx:id="resultadosGridPane" alignment="CENTER" layoutX="9.0" layoutY="580.0" prefWidth="575.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fitHeight="100.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+                        <ImageView fitHeight="100.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="100.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+                        <ImageView fitHeight="100.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+                     </children>
+                  </GridPane>
+                  <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" text="Voltar" />
+                  <Button layoutX="530.0" layoutY="702.0" mnemonicParsing="false" text="Editar" />
+               </children>
+            </Pane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

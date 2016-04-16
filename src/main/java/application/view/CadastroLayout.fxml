@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.CadastroLayoutController">
+   <children>
+      <ScrollPane prefHeight="700.0" prefWidth="620.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+          <AnchorPane>
+               <children>
+                  <GridPane fx:id="gridPane" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints fillHeight="false" maxHeight="39.0" minHeight="25.0" prefHeight="19.0" vgrow="NEVER" />
+                      <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="19.0" vgrow="NEVER" />
+                      <RowConstraints maxHeight="86.0" minHeight="25.0" prefHeight="17.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="115.0" minHeight="25.0" prefHeight="28.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="33.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="25.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="45.0" minHeight="25.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="32.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="25.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="102.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="FICHA DE ACOMPANHAMENTO DE REPRODUÇÃO" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
+                        <Label fx:id="idReproducaoLabel" text="Reproducao ID" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
+                        <Label text="Pais do Macho" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.vgrow="NEVER" />
+                        <Label text="Pais da Fêmea" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.vgrow="NEVER" />
+                        <TextField fx:id="linhagemPaiMachoTextField" alignment="CENTER" prefHeight="25.0" prefWidth="129.0" promptText="Linhagem" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="linhagemMaeMachoTextField" alignment="CENTER" promptText="Linhagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="linhagemPaiFemeaTextField" alignment="CENTER" promptText="Linhagem" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="linhagemMaeFemeaTextField" alignment="CENTER" promptText="Linhagem" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <ImageView fx:id="paiMachoImageView" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                        <ImageView fx:id="maeMachoImageView" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="NEVER" />
+                        <ImageView fx:id="paiFemeaImageView" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="NEVER" />
+                        <ImageView fx:id="maeFemeaImageView" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="NEVER" />
+                        <TextField fx:id="linhagemMachoTextField" alignment="CENTER" prefHeight="25.0" prefWidth="140.0" promptText="Linhagem do Macho" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </TextField>
+                        <TextField fx:id="linhagemFemeaTextField" alignment="CENTER" prefWidth="140.0" promptText="Linhagem da Fêmea" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <ImageView fx:id="machoImageView" fitHeight="149.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <ImageView fx:id="femeaImageView" fitHeight="149.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <TextField fx:id="infoMachoTextField" alignment="CENTER" prefHeight="25.0" prefWidth="140.0" promptText="F? / Idade? / Reprodução nº?" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="infoFemeaTextField" alignment="CENTER" prefHeight="25.0" prefWidth="140.0" promptText="F? / Idade? / Reprodução nº?" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label text="Data de início:" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Retirada do Macho:" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Retirada da Fêmea:" GridPane.rowIndex="10">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Informações Adicionais:" GridPane.rowIndex="11">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <DatePicker fx:id="inicioDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </DatePicker>
+                        <DatePicker fx:id="retiradaMachoDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </DatePicker>
+                        <DatePicker fx:id="retiradaFemeaDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </DatePicker>
+                        <TextArea fx:id="informacoesTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="12">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextArea>
+                        <Label text="Resultados" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="13" />
+                        <Button fx:id="salvarButton" mnemonicParsing="false" onAction="#salvar" text="Salvar" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="15">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="paiMachoDeleteButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#deletarFoto" prefHeight="16.0" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="paiMachoButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#addFoto" prefHeight="16.0" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                           <GridPane.margin>
+                              <Insets right="24.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="maeMachoDeleteButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#deletarFoto" prefHeight="16.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="maeMachoButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#addFoto" prefHeight="16.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                           <GridPane.margin>
+                              <Insets right="24.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="paiFemeaDeleteButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#deletarFoto" prefHeight="16.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="paiFemeaButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#addFoto" prefHeight="16.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="24.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="maeFemeaButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#addFoto" prefHeight="16.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="24.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="maeFemeaDeleteButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#deletarFoto" prefHeight="16.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="machoButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#addFoto" prefHeight="16.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                           <GridPane.margin>
+                              <Insets right="24.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="machoDeleteButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#deletarFoto" prefHeight="16.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="femeaDeleteButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#deletarFoto" prefHeight="16.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="femeaButton" maxHeight="16.0" maxWidth="16.0" mnemonicParsing="false" onAction="#addFoto" prefHeight="16.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="24.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Hyperlink fx:id="adicionarResultadoHyperlink" onAction="#addResultado" text="Adicionar" GridPane.halignment="CENTER" GridPane.rowIndex="14" />
+                        <Button fx:id="cancelarButton" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="15" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
