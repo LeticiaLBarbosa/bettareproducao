@@ -47,4 +47,32 @@ LA</informacoes>
         <retirada_macho>2016-04-26</retirada_macho>
         <ultimaAtualizacao>2016-04-16</ultimaAtualizacao>
     </reproducao>
+    <reproducao>
+        <ID>R0004</ID>
+        <infoFemea></infoFemea>
+        <infoMacho></infoMacho>
+        <informacoes></informacoes>
+        <linhagemFemea></linhagemFemea>
+        <linhagemMacho></linhagemMacho>
+        <linhagemMaeFemea></linhagemMaeFemea>
+        <linhagemMaeMacho></linhagemMaeMacho>
+        <linhagemPaiFemea></linhagemPaiFemea>
+        <linhagemPaiMacho></linhagemPaiMacho>
+        <ultimaAtualizacao>2016-04-16</ultimaAtualizacao>
+    </reproducao>
+    <reproducao>
+        <ID>R0005</ID>
+        <infoFemea></infoFemea>
+        <infoMacho></infoMacho>
+        <informacoes></informacoes>
+        <linhagemFemea></linhagemFemea>
+        <linhagemMacho></linhagemMacho>
+        <linhagemMaeFemea></linhagemMaeFemea>
+        <linhagemMaeMacho></linhagemMaeMacho>
+        <linhagemPaiFemea></linhagemPaiFemea>
+        <linhagemPaiMacho></linhagemPaiMacho>
+        <mae_macho>src/main/resources/uploaded/R0005_pqaaagwl1fbueiau2n2ncdm66u0z2uq6cg0minjl7fk9wjwd8u990fy48mny4-zdburh2ou9gpds1csgj-znmljdc-kam1t1uhy-amo3lh0js-8etjnlvossjn1a.jpg</mae_macho>
+        <pai_femea>src/main/resources/uploaded/R0005_1137878_1024x780.jpg</pai_femea>
+        <ultimaAtualizacao>2016-04-16</ultimaAtualizacao>
+    </reproducao>
 </reproducoes>

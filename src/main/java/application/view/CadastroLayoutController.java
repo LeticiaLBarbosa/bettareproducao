@@ -257,7 +257,7 @@ public class CadastroLayoutController {
 		String idBotaoClicado = botaoClicado.getId();
 		
 		File file = abrirFileChooser();
-		String path = new String("src/main/resources/uploaded/"+file.getName());
+		String path = new String("src/main/resources/uploaded/"+ID+"_"+file.getName());
 		File newFile = new File(path);
 		try {
 			BufferedImage bufferedImage = ImageIO.read(file);
@@ -266,27 +266,31 @@ public class CadastroLayoutController {
 			case "paiMachoButton":
 				paiMachoImageView.setImage(image);
 				fotoPaiMacho = path;
-				System.out.println(fotoPaiMacho);
 				ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
 				break;
 			case "maeMachoButton":
 				maeMachoImageView.setImage(image);
+				fotoMaeMacho = path;
 				ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
 				break;
 			case "paiFemeaButton":
 				paiFemeaImageView.setImage(image);
+				fotoPaiFemea = path;
 				ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
 				break;
 			case "maeFemeaButton":
 				maeFemeaImageView.setImage(image);
+				fotoMaeFemea = path;
 				ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
 				break;
 			case "machoButton":
 				machoImageView.setImage(image);
+				fotoMacho = path;
 				ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
 				break;
 			case "femeaButton":
 				femeaImageView.setImage(image);
+				fotoFemea = path;
 				ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
 				break;
 			}
@@ -304,7 +308,7 @@ public class CadastroLayoutController {
 		switch (idBotaoClicado) {
 		case "paiMachoDeleteButton":
 			paiMachoImageView.setImage(image);
-			file = new File("src/main/resources/uploaded/"+reproducao.getLinhagemPaiMacho());
+			file = new File("src/main/resources/uploaded/"+ID+"_"+reproducao.getLinhagemPaiMacho());
 			if(file.exists()){
 				file.delete();
 				fotoPaiMacho = null;
@@ -312,7 +316,7 @@ public class CadastroLayoutController {
 			break;
 		case "maeMachoDeleteButton":
 			maeMachoImageView.setImage(image);
-			file = new File("src/main/resources/uploaded/"+reproducao.getLinhagemMaeMacho());
+			file = new File("src/main/resources/uploaded/"+ID+"_"+reproducao.getLinhagemMaeMacho());
 			if(file.exists()){
 				file.delete();
 				fotoMaeMacho = null;
@@ -320,7 +324,7 @@ public class CadastroLayoutController {
 			break;
 		case "paiFemeaDeleteButton":
 			paiFemeaImageView.setImage(image);
-			file = new File("src/main/resources/uploaded/"+reproducao.getLinhagemPaiFemea());
+			file = new File("src/main/resources/uploaded/"+ID+"_"+reproducao.getLinhagemPaiFemea());
 			if(file.exists()){
 				file.delete();
 				fotoPaiFemea = null;
@@ -328,7 +332,7 @@ public class CadastroLayoutController {
 			break;
 		case "maeFemeaDeleteButton":
 			maeFemeaImageView.setImage(image);
-			file = new File("src/main/resources/uploaded/"+reproducao.getLinhagemMaeFemea());
+			file = new File("src/main/resources/uploaded/"+ID+"_"+reproducao.getLinhagemMaeFemea());
 			if(file.exists()){
 				file.delete();
 				fotoMaeFemea = null;
@@ -336,7 +340,7 @@ public class CadastroLayoutController {
 			break;
 		case "machoDeleteButton":
 			machoImageView.setImage(image);
-			file = new File("src/main/resources/uploaded/"+reproducao.getLinhagemMacho());
+			file = new File("src/main/resources/uploaded/"+ID+"_"+reproducao.getLinhagemMacho());
 			if(file.exists()){
 				file.delete();
 				fotoMacho = null;
@@ -344,7 +348,7 @@ public class CadastroLayoutController {
 			break;
 		case "femeaDeleteButton":
 			femeaImageView.setImage(image);
-			file = new File("src/main/resources/uploaded/"+reproducao.getLinhagemFemea());
+			file = new File("src/main/resources/uploaded/"+ID+"_"+reproducao.getLinhagemFemea());
 			if(file.exists()){
 				file.delete();
 				fotoFemea = null;
