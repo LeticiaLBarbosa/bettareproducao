@@ -2,14 +2,49 @@
 <reproducoes>
     <reproducao>
         <ID>R0001</ID>
+        <infoFemea>Uhuul</infoFemea>
+        <infoMacho>Uhul</infoMacho>
+        <informacoes>Bla
+BLaBla
+lalala
+LA</informacoes>
+        <linhagemFemea></linhagemFemea>
+        <linhagemMacho></linhagemMacho>
+        <linhagemMaeFemea>bem?</linhagemMaeFemea>
+        <linhagemMaeMacho>papai</linhagemMaeMacho>
+        <linhagemPaiFemea>tudo</linhagemPaiFemea>
+        <linhagemPaiMacho>olá</linhagemPaiMacho>
+        <pai_macho>src/main/resources/uploaded/39-1 (1).jpg</pai_macho>
+    </reproducao>
+    <reproducao>
+        <ID>R0002</ID>
+        <infoFemea>oakspoaks</infoFemea>
+        <infoMacho>aopksopaks</infoMacho>
+        <informacoes>aspokapsk</informacoes>
+        <inicio>2016-04-01</inicio>
+        <linhagemFemea>poaksopak</linhagemFemea>
+        <linhagemMacho>aopsko</linhagemMacho>
+        <linhagemMaeFemea>tudo certo?</linhagemMaeFemea>
+        <linhagemMaeMacho>galerinha</linhagemMaeMacho>
+        <linhagemPaiFemea>como vai</linhagemPaiFemea>
+        <linhagemPaiMacho>Olá</linhagemPaiMacho>
+        <retirada_femea>2016-04-04</retirada_femea>
+        <retirada_macho>2016-04-04</retirada_macho>
+    </reproducao>
+    <reproducao>
+        <ID>R0003</ID>
         <infoFemea></infoFemea>
         <infoMacho></infoMacho>
         <informacoes></informacoes>
+        <inicio>2016-04-12</inicio>
         <linhagemFemea></linhagemFemea>
         <linhagemMacho></linhagemMacho>
         <linhagemMaeFemea></linhagemMaeFemea>
-        <linhagemMaeMacho></linhagemMaeMacho>
+        <linhagemMaeMacho>olá</linhagemMaeMacho>
         <linhagemPaiFemea></linhagemPaiFemea>
-        <linhagemPaiMacho></linhagemPaiMacho>
+        <linhagemPaiMacho>pois bem</linhagemPaiMacho>
+        <retirada_femea>2016-05-04</retirada_femea>
+        <retirada_macho>2016-04-26</retirada_macho>
+        <ultimaAtualizacao>2016-04-16</ultimaAtualizacao>
     </reproducao>
 </reproducoes>

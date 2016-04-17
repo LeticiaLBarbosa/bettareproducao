@@ -10,7 +10,10 @@ import javax.xml.bind.Unmarshaller;
 
 import application.model.Reproducao;
 import application.model.ReproducaoListWrapper;
+import application.view.CadastroLayoutController;
 import application.view.InitialLayoutController;
+import application.view.PesquisaLayoutController;
+import application.view.ReproducaoOverviewController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,49 +41,79 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("BetaReprodução");
 		showInitialLayout();
 	}
 
 	public void showInitialLayout() {
-		try {
-			// Load initial layout
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/InitialLayout.fxml"));
-			AnchorPane initialLayout = (AnchorPane) loader.load();
-			
-			// Change the scene to initialLayout
-			Scene scene = new Scene(initialLayout);
-			primaryStage.setTitle("Início");
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			
-			// Give the controller access to the main app.
-			InitialLayoutController controller = loader.getController();
-			controller.setMain(this);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		File file = getReproducaoFilePath();
         if (file != null) {
             loadReproducaoDataFromFile(file);
+            System.out.println("achou file!");
         }
+		changeView("view/InitialLayout.fxml", "BettaReprodução", 1);
+	}
+	
+	public void showCadastroLayout() {
+		changeView("view/CadastroLayout.fxml", "Cadastro", 2);
 	}
 
+	public void showPesquisaLayout() {
+		changeView("view/PesquisaLayout.fxml", "Pesquisa", 3);
+	}
+	
 	public void showOverviewLayout() {
-//		try {
-//			// Load person overview.
-//			FXMLLoader loader = new FXMLLoader();
-//			loader.setLocation(Main.class.getResource("view/OverviewLayout.fxml"));
-//			AnchorPane overView = (AnchorPane) loader.load();
-//
-//			// Give the controller access to the main app.
-//			ReproducaoOverviewController controller = loader.getController();
-//			controller.setMain(this);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		changeView("view/OverviewLayout.fxml", "Visualização de ficha", 4);
+	}
+
+	private void changeView(String fxmlFile, String title, Integer id) {
+		try {
+			// Load pesquisa layout
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource(fxmlFile));
+			AnchorPane novoLayout = (AnchorPane) loader.load();
+
+			// Set pesquisa layout into the center of root layout.
+			Scene scene = new Scene(novoLayout);
+			primaryStage.setScene(scene);
+			primaryStage.setTitle(title);
+			primaryStage.show();
+			
+			// Give the controller access to the main app.
+			switch (id) {
+			case 1:
+				InitialLayoutController controller;
+				controller = loader.getController();
+				System.out.println("entrou betta");
+				controller.setMain(this);
+				break;
+			case 2:
+				CadastroLayoutController controller2;
+				controller2 = loader.getController();
+				System.out.println(getReproducaoData().size());
+				System.out.println("entrou cadastro");
+				
+				Reproducao reproducao = new Reproducao();
+				controller2.setReproducao(reproducao);
+				controller2.setMain(this);
+				break;
+			case 3:
+				PesquisaLayoutController controller3;
+				controller3 = loader.getController();
+				System.out.println("entrou pesquisa");
+				System.out.println(this.getClass().getName());
+				controller3.setMain(this);
+				break;
+			case 4:
+				ReproducaoOverviewController controller4;
+				System.out.println("entrou overview");
+				controller4 = loader.getController();
+				controller4.setMain(this);
+				break;
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -110,7 +143,7 @@ public class Main extends Application {
         Preferences prefs = Preferences.userNodeForPackage(Main.class);
         if (file != null) {
             prefs.put("filePath", file.getPath());
-
+            System.out.println("alterou filepath");
             // Update the stage title.
             primaryStage.setTitle("BettaReprodução - " + file.getName());
         } else {
@@ -138,6 +171,7 @@ public class Main extends Application {
 
 	        reproData.clear();
 	        reproData.addAll(wrapper.getReproducoes());
+	        System.out.println(reproData.get(0).getID());
 
 	        // Save the file path to the registry.
 	        setReproducaoFilePath(file);

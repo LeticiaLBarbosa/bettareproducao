@@ -4,17 +4,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.PesquisaLayoutController">
    <children>
       <Label layoutX="224.0" layoutY="14.0" text="Pesquisar Ficha de Reprodução" />
-      <TextField layoutX="20.0" layoutY="48.0" prefHeight="25.0" prefWidth="174.0" AnchorPane.leftAnchor="20.0" />
-      <DatePicker layoutX="219.0" layoutY="48.0" />
-      <DatePicker layoutX="424.0" layoutY="48.0" AnchorPane.rightAnchor="20.0" />
-      <DatePicker layoutX="20.0" layoutY="94.0" />
-      <DatePicker layoutX="219.0" layoutY="94.0" />
+      <TextField layoutX="20.0" layoutY="48.0" prefHeight="25.0" prefWidth="174.0" promptText="ID de Reprodução" AnchorPane.leftAnchor="20.0" />
+      <DatePicker layoutX="219.0" layoutY="48.0" promptText="Data de Início" />
+      <DatePicker layoutX="424.0" layoutY="48.0" promptText="Retirada da Fêmea" AnchorPane.rightAnchor="20.0" />
+      <DatePicker layoutX="20.0" layoutY="94.0" promptText="Retirada do Macho" />
+      <DatePicker layoutX="219.0" layoutY="94.0" promptText="Ultima Atualização" />
       <Button layoutX="472.0" layoutY="94.0" mnemonicParsing="false" text="Pesquisar" />
-      <TableView layoutX="21.0" layoutY="134.0" prefHeight="556.0" prefWidth="572.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <TableView layoutX="21.0" layoutY="134.0" prefHeight="526.0" prefWidth="572.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <columns>
           <TableColumn prefWidth="75.0" text="ID" />
           <TableColumn prefWidth="75.0" text="Início" />
@@ -26,5 +25,6 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <Button layoutX="530.0" layoutY="667.0" mnemonicParsing="false" text="Cancelar" />
    </children>
 </AnchorPane>

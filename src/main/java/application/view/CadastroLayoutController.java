@@ -3,7 +3,10 @@ package application.view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,6 +122,7 @@ public class CadastroLayoutController {
 	private String fotoMaeMacho;
 	private String fotoPaiFemea;
 	private String fotoMaeFemea;
+	private String ID = null;
 
 	private List<String> resultados;
 	
@@ -132,13 +136,11 @@ public class CadastroLayoutController {
 		fotoMaeFemea = null;
 		fotoPaiFemea = null;
 		resultados = new ArrayList<>();
-		System.out.println(resultados.toString());
 
 	}
 
 	@FXML
 	private void initialize() {
-		setRepID();
 		initEditButtons();
 		initDeleteButtons();
 		initFotos();
@@ -149,7 +151,25 @@ public class CadastroLayoutController {
 	}
 	
 	private void setRepID(){
-		idReproducaoLabel.setText("R0001");
+		int numeroFichas = main.getReproducaoData().size();
+		if (numeroFichas < 1) {
+			ID = "R0001";
+		}else{
+			Reproducao dadoAnterior = main.getReproducaoData().get(numeroFichas-1);
+			int idAtual = Integer.parseInt(dadoAnterior.getID().substring(1)) + 1;
+			if (idAtual > 9){
+				ID = String.format("R00%d",idAtual);
+			}else if (idAtual > 99) {
+				ID = String.format("R0%d",idAtual);
+			}else if (idAtual > 999) {
+				ID = String.format("R%d",idAtual);
+			}else if (idAtual > 9999) {
+				ID = String.format("R%d",idAtual);
+			}else{
+				ID = String.format("R000%d",idAtual);
+			}
+		}
+		idReproducaoLabel.setText(ID);
 	}
 
 	private void initEditButtons() {
@@ -211,31 +231,12 @@ public class CadastroLayoutController {
 		reproducao.setRetirada_femea(retiradaFemeaDatePicker.getValue());
 		reproducao.setRetirada_macho(retiradaMachoDatePicker.getValue());
 		reproducao.setResultados(resultados);
+		Date input = new Date();
+		LocalDate diaAtual = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		reproducao.setUltimaAtualizacao(diaAtual);
 		
 		handleSave();
-		abrirPesquisaLayout();
-	}
-	
-	private void abrirPesquisaLayout(){
-		try {
-			// Load pesquisa layout
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("PesquisaLayout.fxml"));
-			AnchorPane pesquisaLayout = (AnchorPane) loader.load();
-
-			// Set pesquisa layout into the center of root layout.
-			Scene scene = new Scene(pesquisaLayout);
-			prevStage.setScene(scene);
-			prevStage.setTitle("Pesquisa");
-			prevStage.show();
-
-			// Give the controller access to the main app.
-			CadastroLayoutController controller = loader.getController();
-			controller.setMain(main);
-			controller.setPrevStage(prevStage);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		main.showPesquisaLayout();
 	}
 	
 	private void handleSave(){
@@ -371,7 +372,7 @@ public class CadastroLayoutController {
 
 	public void setMain(Main main) {
 		this.main = main;
-		
+		setRepID();		
 	}
 
 }

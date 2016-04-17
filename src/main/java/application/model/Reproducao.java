@@ -3,6 +3,9 @@ package application.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import application.util.LocalDateAdapter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -31,6 +34,7 @@ public class Reproducao {
 	private final ObjectProperty<LocalDate> retirada_macho;
 	private final StringProperty informacoes;
 	private final ListProperty<String> resultados;
+	private ObjectProperty<LocalDate> ultimaAtualizacao;
 
 	public Reproducao() {
 		this(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
@@ -62,6 +66,7 @@ public class Reproducao {
 		this.retirada_macho = new SimpleObjectProperty<LocalDate>(retirada_macho);
 		this.informacoes = new SimpleStringProperty(informacoes);
 		this.resultados = new SimpleListProperty<>();
+		this.ultimaAtualizacao = new SimpleObjectProperty<LocalDate>();
 	}
 
 	public String getID() {
@@ -148,6 +153,7 @@ public class Reproducao {
 		return femea;
 	}
 
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	public LocalDate getInicio() {
 		return inicio.get();
 	}
@@ -160,6 +166,7 @@ public class Reproducao {
 		return inicio;
 	}
 
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	public LocalDate getRetirada_femea() {
 		return retirada_femea.get();
 	}
@@ -172,6 +179,7 @@ public class Reproducao {
 		return retirada_femea;
 	}
 
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	public LocalDate getRetirada_macho() {
 		return retirada_macho.get();
 	}
@@ -184,6 +192,19 @@ public class Reproducao {
 		return retirada_macho;
 	}
 
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
+	public LocalDate getUltimaAtualizacao() {
+		return ultimaAtualizacao.get();
+	}
+
+	public void setUltimaAtualizacao(LocalDate ultimaAtualizacao) {
+		this.ultimaAtualizacao.set(ultimaAtualizacao);
+	}
+
+	public ObjectProperty<LocalDate> getUltimaAtualizacaoProperty() {
+		return ultimaAtualizacao;
+	}
+	
 	public String getInformacoes() {
 		return informacoes.get();
 	}

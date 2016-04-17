@@ -25,7 +25,6 @@ public class PesquisaLayoutController {
 	
 	public void setMain(Main main) {
 		this.main = main;
-		setPrevStage(this.main.getPrimaryStage());
 	}
 	
 	public void setPrevStage(Stage stage) {
