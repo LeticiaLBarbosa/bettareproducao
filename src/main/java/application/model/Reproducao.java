@@ -1,6 +1,7 @@
 package application.model;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -10,8 +11,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableMap;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.MapProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleMapProperty;
 
 public class Reproducao {
 	private final StringProperty ID;
@@ -33,7 +37,7 @@ public class Reproducao {
 	private final ObjectProperty<LocalDate> retirada_femea;
 	private final ObjectProperty<LocalDate> retirada_macho;
 	private final StringProperty informacoes;
-	private final ListProperty<String> resultados;
+	private final MapProperty<String,String> resultados;
 	private ObjectProperty<LocalDate> ultimaAtualizacao;
 
 	public Reproducao() {
@@ -45,7 +49,7 @@ public class Reproducao {
 			String femea, String infoMacho, String infoFemea, String linhagem_paiMacho, String linhagem_maeMacho,
 			String linhagem_paiFemea, String linhagem_maeFemea, String linhagem_macho, String linhagem_femea,
 			LocalDate inicio, LocalDate retirada_femea, LocalDate retirada_macho, String informacoes,
-			List<String> resultados) {
+			HashMap<String,String> resultados) {
 		this.ID = new SimpleStringProperty(ID);
 		this.pai_macho = new SimpleStringProperty(pai_macho);
 		this.mae_macho = new SimpleStringProperty(mae_macho);
@@ -65,7 +69,7 @@ public class Reproducao {
 		this.retirada_femea = new SimpleObjectProperty<LocalDate>(retirada_femea);
 		this.retirada_macho = new SimpleObjectProperty<LocalDate>(retirada_macho);
 		this.informacoes = new SimpleStringProperty(informacoes);
-		this.resultados = new SimpleListProperty<>();
+		this.resultados = new SimpleMapProperty<String, String>();
 		this.ultimaAtualizacao = new SimpleObjectProperty<LocalDate>();
 	}
 
@@ -213,17 +217,15 @@ public class Reproducao {
 		this.informacoes.set(informacoes);
 	}
 
-	public List<String> getResultados() {
-		return resultados;
+	public ObservableMap<String, String> getResultados() {
+		return resultados.get();
 	}
 
-	public void setResultados(List<String> resultados) {
-		for (String resultado : resultados) {
-			this.resultados.add(resultado);
-		}
+	public void setResultados(ObservableMap<String,String> resultados) {
+		this.resultados.set(resultados);
 	}
 
-	public ListProperty<String> getResultadosProperty() {
+	public MapProperty<String, String> getResultadosProperty() {
 		return resultados;
 	}
 

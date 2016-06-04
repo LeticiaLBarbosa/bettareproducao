@@ -75,4 +75,17 @@ LA</informacoes>
         <pai_femea>src/main/resources/uploaded/R0005_1137878_1024x780.jpg</pai_femea>
         <ultimaAtualizacao>2016-04-16</ultimaAtualizacao>
     </reproducao>
+    <reproducao>
+        <ID>R0006</ID>
+        <infoFemea></infoFemea>
+        <infoMacho></infoMacho>
+        <informacoes></informacoes>
+        <linhagemFemea></linhagemFemea>
+        <linhagemMacho></linhagemMacho>
+        <linhagemMaeFemea></linhagemMaeFemea>
+        <linhagemMaeMacho></linhagemMaeMacho>
+        <linhagemPaiFemea></linhagemPaiFemea>
+        <linhagemPaiMacho></linhagemPaiMacho>
+        <ultimaAtualizacao>2016-06-02</ultimaAtualizacao>
+    </reproducao>
 </reproducoes>

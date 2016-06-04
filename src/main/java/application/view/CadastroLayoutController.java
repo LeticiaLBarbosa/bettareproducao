@@ -7,7 +7,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +17,8 @@ import javax.imageio.ImageIO;
 
 import application.Main;
 import application.model.Reproducao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -124,7 +128,7 @@ public class CadastroLayoutController {
 	private String fotoMaeFemea;
 	private String ID = null;
 
-	private List<String> resultados;
+	private Map<String, String> resultados;
 	
 	private boolean saveClicked = false;
 
@@ -135,7 +139,7 @@ public class CadastroLayoutController {
 		fotoPaiMacho = null;
 		fotoMaeFemea = null;
 		fotoPaiFemea = null;
-		resultados = new ArrayList<>();
+		resultados =  new HashMap<String, String>();
 
 	}
 
@@ -230,7 +234,8 @@ public class CadastroLayoutController {
 		reproducao.setPai_macho(fotoPaiMacho);
 		reproducao.setRetirada_femea(retiradaFemeaDatePicker.getValue());
 		reproducao.setRetirada_macho(retiradaMachoDatePicker.getValue());
-		reproducao.setResultados(resultados);
+		ObservableMap<String, String> resultadosObservable = FXCollections.observableMap(resultados);
+		reproducao.setResultados(resultadosObservable);
 		Date input = new Date();
 		LocalDate diaAtual = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		reproducao.setUltimaAtualizacao(diaAtual);
