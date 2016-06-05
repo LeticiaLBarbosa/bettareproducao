@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,9 +19,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
@@ -32,8 +31,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -129,18 +129,34 @@ public class CadastroLayoutController {
 	private String ID = null;
 
 	private Map<String, String> resultados;
+	private Map<String, Integer> ultimaPosVazia;
 	
 	private boolean saveClicked = false;
+	
+	private int resultCount = 0;
 
 	public CadastroLayoutController() {
 
+//		machoDeleteButton.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent event) {
+//				remove(fotoMacho.getId)
+//			}
+//		});
+//		
+		
 		fotoMacho = null;
 		fotoFemea = null;
 		fotoPaiMacho = null;
 		fotoMaeFemea = null;
 		fotoPaiFemea = null;
 		resultados =  new HashMap<String, String>();
+		ultimaPosVazia = new HashMap<>();
+		ultimaPosVazia.put("lin", 14);
+		ultimaPosVazia.put("col", 0);
 
+	
+		
 	}
 
 	@FXML
@@ -376,7 +392,107 @@ public class CadastroLayoutController {
 	}
 
 	public void addResultado() {
+		shiftAdicionarLink();
+		criarViews();
+		shiftUltimaPosVazia();
+		resultCount++;
+	}
+
+	private void shiftUltimaPosVazia() {
+		if(ultimaPosVazia.get("col") == 3){
+			ultimaPosVazia.put("lin", ultimaPosVazia.get("lin") + 1);
+			ultimaPosVazia.put("col", 0);
+		}else{
+			ultimaPosVazia.put("col", ultimaPosVazia.get("col") + 1);
+		}
+	}
+
+	private void criarViews() {
+		BorderPane borderPane = new BorderPane();
+		StackPane pane = new StackPane();
+		TextField linhagem = new TextField();
+		ImageView imageView = new ImageView();
+		Button editButton = new Button();
+		Button deleteButton = new Button();
 		
+		Image noFotoImage = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
+		Image editImage = new Image(getClass().getResourceAsStream("/edit_icon.png"));
+		Image deleteImage = new Image(getClass().getResourceAsStream("/delete_icon.png"));
+		
+		imageView.setImage(noFotoImage);
+		imageView.setFitHeight(100);
+		imageView.setFitWidth(140);
+		imageView.setPreserveRatio(true);
+		imageView.setId(String.format("result%dImageView", resultCount));
+		deleteButton.setId(String.format("result%ddeleteButton", resultCount));
+		editButton.setId(String.format("result%deditButton", resultCount));
+		editButton.setGraphic(new ImageView(editImage));
+		deleteButton.setGraphic(new ImageView(deleteImage));
+		deleteButton.setPadding(new Insets(2));
+		editButton.setPadding(new Insets(2));
+		linhagem.setPromptText("Linhagem");
+		
+		editButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				addFotoResultado(event, imageView, linhagem.getText());
+			}
+		});
+		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				deleteFotoResultado(event);
+			}
+		});
+		
+		pane.getChildren().addAll(imageView, deleteButton, editButton);
+		
+		borderPane.setTop(linhagem);
+		borderPane.setCenter(pane);
+		
+		StackPane.setAlignment(deleteButton,Pos.BOTTOM_RIGHT);
+		StackPane.setAlignment(editButton,Pos.BOTTOM_RIGHT);
+		StackPane.setAlignment(imageView,Pos.CENTER);
+		StackPane.setMargin(deleteButton, new Insets(0,5,0,0));
+		StackPane.setMargin(editButton, new Insets(0,24,0,0));
+		StackPane.setMargin(imageView, new Insets(5,5,0,5));
+		
+		BorderPane.setMargin(linhagem, new Insets(5,5,0,5));
+		
+		gridPane.add(borderPane,ultimaPosVazia.get("col"), ultimaPosVazia.get("lin"));
+	}
+
+	private void addFotoResultado(ActionEvent event, ImageView imageView, String linhagem) {
+		File file = abrirFileChooser();
+		String path = new String("src/main/resources/uploaded/"+ID+"_result_"+file.getName());
+		File newFile = new File(path);
+		try {
+			BufferedImage bufferedImage = ImageIO.read(file);
+			Image image = SwingFXUtils.toFXImage(bufferedImage, null); 
+			imageView.setImage(image);
+			resultados.put(linhagem, path);
+			ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
+		}catch (IOException ex) {
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	
+	private void deleteFotoResultado(ActionEvent event) {
+		// TODO Auto-generated method stub
+	}
+	
+	private void shiftAdicionarLink() {
+		System.out.println(ultimaPosVazia.toString());
+		int linhaAtualAdicionarLink = GridPane.getRowIndex(adicionarResultadoHyperlink);
+		if(ultimaPosVazia.get("lin") == 14){
+			if(ultimaPosVazia.get("col") == 0){
+				GridPane.setRowIndex(adicionarResultadoHyperlink, linhaAtualAdicionarLink + 1);
+			}
+		}else{
+			if(ultimaPosVazia.get("col") == 0){
+				GridPane.setRowIndex(adicionarResultadoHyperlink, linhaAtualAdicionarLink + 1);
+			}
+		}
 	}
 
 	public void setMain(Main main) {
