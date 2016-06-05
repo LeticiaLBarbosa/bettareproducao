@@ -28,6 +28,7 @@ public class Main extends Application {
 
 	private Stage primaryStage;
 	private ObservableList<Reproducao> reproData = FXCollections.observableArrayList();
+	private String filePathDir = "src/main/resources/";
 
 	/**
 	 * Returns the data as an observable list of Persons.
@@ -46,9 +47,12 @@ public class Main extends Application {
 
 	public void showInitialLayout() {
 		File file = getReproducaoFilePath();
-        if (file != null) {
+        if (file != null && file.exists()) {
             loadReproducaoDataFromFile(file);
             System.out.println("achou file!");
+        }else{
+        	file = new File(filePathDir+"database.xml");
+        	setReproducaoFilePath(file);
         }
 		changeView("view/InitialLayout.fxml", "BettaReprodução", 1);
 	}
@@ -173,9 +177,6 @@ public class Main extends Application {
 	        reproData.addAll(wrapper.getReproducoes());
 	        System.out.println(reproData.get(0).getID());
 
-	        // Save the file path to the registry.
-	        setReproducaoFilePath(file);
-
 	    } catch (Exception e) { // catches ANY exception
 	        Alert alert = new Alert(AlertType.ERROR);
 	        alert.setTitle("Error");
@@ -205,8 +206,6 @@ public class Main extends Application {
 	        // Marshalling and saving XML to the file.
 	        m.marshal(wrapper, file);
 
-	        // Save the file path to the registry.
-	        setReproducaoFilePath(file);
 	    } catch (Exception e) { // catches ANY exception
 	        Alert alert = new Alert(AlertType.ERROR);
 	        alert.setTitle("Error");
@@ -214,6 +213,7 @@ public class Main extends Application {
 	        alert.setContentText("Could not save data to file:\n" + file.getPath());
 
 	        alert.showAndWait();
+	        System.out.println(e);
 	    }
 	}
 

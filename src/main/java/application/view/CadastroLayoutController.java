@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -127,8 +129,9 @@ public class CadastroLayoutController {
 	private String fotoPaiFemea;
 	private String fotoMaeFemea;
 	private String ID = null;
+	private String imagesDir = new String("src/main/resources/uploaded/");
 
-	private Map<String, String> resultados;
+	private HashMap<Integer, ArrayList<String>> resultados;
 	private Map<String, Integer> ultimaPosVazia;
 	
 	private boolean saveClicked = false;
@@ -150,7 +153,7 @@ public class CadastroLayoutController {
 		fotoPaiMacho = null;
 		fotoMaeFemea = null;
 		fotoPaiFemea = null;
-		resultados =  new HashMap<String, String>();
+		resultados =  new HashMap<Integer, ArrayList<String>>();
 		ultimaPosVazia = new HashMap<>();
 		ultimaPosVazia.put("lin", 14);
 		ultimaPosVazia.put("col", 0);
@@ -250,8 +253,7 @@ public class CadastroLayoutController {
 		reproducao.setPai_macho(fotoPaiMacho);
 		reproducao.setRetirada_femea(retiradaFemeaDatePicker.getValue());
 		reproducao.setRetirada_macho(retiradaMachoDatePicker.getValue());
-		ObservableMap<String, String> resultadosObservable = FXCollections.observableMap(resultados);
-		reproducao.setResultados(resultadosObservable);
+		reproducao.setResultados(resultados);
 		Date input = new Date();
 		LocalDate diaAtual = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		reproducao.setUltimaAtualizacao(diaAtual);
@@ -278,7 +280,7 @@ public class CadastroLayoutController {
 		String idBotaoClicado = botaoClicado.getId();
 		
 		File file = abrirFileChooser();
-		String path = new String("src/main/resources/uploaded/"+ID+"_"+file.getName());
+		String path = imagesDir+ID+"_"+file.getName();
 		File newFile = new File(path);
 		try {
 			BufferedImage bufferedImage = ImageIO.read(file);
@@ -415,23 +417,6 @@ public class CadastroLayoutController {
 		Button editButton = new Button();
 		Button deleteButton = new Button();
 		
-		Image noFotoImage = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
-		Image editImage = new Image(getClass().getResourceAsStream("/edit_icon.png"));
-		Image deleteImage = new Image(getClass().getResourceAsStream("/delete_icon.png"));
-		
-		imageView.setImage(noFotoImage);
-		imageView.setFitHeight(100);
-		imageView.setFitWidth(140);
-		imageView.setPreserveRatio(true);
-		imageView.setId(String.format("result%dImageView", resultCount));
-		deleteButton.setId(String.format("result%ddeleteButton", resultCount));
-		editButton.setId(String.format("result%deditButton", resultCount));
-		editButton.setGraphic(new ImageView(editImage));
-		deleteButton.setGraphic(new ImageView(deleteImage));
-		deleteButton.setPadding(new Insets(2));
-		editButton.setPadding(new Insets(2));
-		linhagem.setPromptText("Linhagem");
-		
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -441,9 +426,23 @@ public class CadastroLayoutController {
 		deleteButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				deleteFotoResultado(event);
+				deleteFotoResultado(event, imageView);
 			}
 		});
+		
+		Image noFotoImage = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
+		Image editImage = new Image(getClass().getResourceAsStream("/edit_icon.png"));
+		Image deleteImage = new Image(getClass().getResourceAsStream("/delete_icon.png"));
+		
+		imageView.setImage(noFotoImage);
+		imageView.setFitHeight(100);
+		imageView.setFitWidth(140);
+		imageView.setPreserveRatio(true);
+		editButton.setGraphic(new ImageView(editImage));
+		deleteButton.setGraphic(new ImageView(deleteImage));
+		deleteButton.setPadding(new Insets(2));
+		editButton.setPadding(new Insets(2));
+		linhagem.setPromptText("Linhagem");
 		
 		pane.getChildren().addAll(imageView, deleteButton, editButton);
 		
@@ -464,33 +463,53 @@ public class CadastroLayoutController {
 
 	private void addFotoResultado(ActionEvent event, ImageView imageView, String linhagem) {
 		File file = abrirFileChooser();
-		String path = new String("src/main/resources/uploaded/"+ID+"_result_"+file.getName());
+		String imageName = ID+String.format("_result_%d", resultCount)+file.getName();
+		String path = imagesDir+imageName;
+		imageView.setId(resultCount+"");
 		File newFile = new File(path);
 		try {
 			BufferedImage bufferedImage = ImageIO.read(file);
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null); 
 			imageView.setImage(image);
-			resultados.put(linhagem, path);
+			ArrayList<String> resultInfo = new ArrayList<String>();
+			resultInfo.add(linhagem);
+			resultInfo.add(imageName);
+			resultados.put(resultCount,resultInfo);
 			ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
 		}catch (IOException ex) {
 			Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 	
-	private void deleteFotoResultado(ActionEvent event) {
-		// TODO Auto-generated method stub
+	private void deleteFotoResultado(ActionEvent event, ImageView imageView) {
+		Image image = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
+		ArrayList<String> values = resultados.get(Integer.parseInt(imageView.getId()));
+		String imageName = values.get(1);
+		File file = null;
+		
+		imageView.setImage(image);
+		file = new File(imagesDir+imageName);
+		
+		if(file.exists()){
+			file.delete();
+			values.set(1, "");
+			resultados.put(Integer.parseInt(imageView.getId()), values);
+		}
 	}
 	
 	private void shiftAdicionarLink() {
-		System.out.println(ultimaPosVazia.toString());
 		int linhaAtualAdicionarLink = GridPane.getRowIndex(adicionarResultadoHyperlink);
 		if(ultimaPosVazia.get("lin") == 14){
 			if(ultimaPosVazia.get("col") == 0){
 				GridPane.setRowIndex(adicionarResultadoHyperlink, linhaAtualAdicionarLink + 1);
+				GridPane.setRowIndex(cancelarButton, linhaAtualAdicionarLink + 2);
+				GridPane.setRowIndex(salvarButton, linhaAtualAdicionarLink + 2);
 			}
 		}else{
 			if(ultimaPosVazia.get("col") == 0){
 				GridPane.setRowIndex(adicionarResultadoHyperlink, linhaAtualAdicionarLink + 1);
+				GridPane.setRowIndex(cancelarButton, linhaAtualAdicionarLink + 2);
+				GridPane.setRowIndex(salvarButton, linhaAtualAdicionarLink + 2);
 			}
 		}
 	}
