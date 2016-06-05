@@ -80,6 +80,9 @@ public class Main extends Application {
 			Scene scene = new Scene(novoLayout);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle(title);
+			primaryStage.centerOnScreen();
+			primaryStage.sizeToScene();
+			primaryStage.setMaximized(false);
 			primaryStage.show();
 			
 			// Give the controller access to the main app.
