@@ -1,1 +1,4 @@
 /target/
+
+/src/main/resources/uploaded/
+/src/main/resources/database.xml
