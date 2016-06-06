@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,8 +15,8 @@ import javax.imageio.ImageIO;
 
 import application.Main;
 import application.model.Reproducao;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,7 +35,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class CadastroLayoutController {
 	@FXML
@@ -118,7 +115,6 @@ public class CadastroLayoutController {
 	@FXML
 	private Hyperlink adicionarResultadoHyperlink;
 
-	private Stage prevStage;
 	private Main main;
 	private Reproducao reproducao; 
 
@@ -131,10 +127,8 @@ public class CadastroLayoutController {
 	private String ID = null;
 	private String imagesDir = new String("src/main/resources/uploaded/");
 
-	private HashMap<Integer, ArrayList<String>> resultados;
+	private HashMap<Integer,String> resultados;
 	private Map<String, Integer> ultimaPosVazia;
-	
-	private boolean saveClicked = false;
 	
 	private int resultCount = 0;
 
@@ -153,7 +147,7 @@ public class CadastroLayoutController {
 		fotoPaiMacho = null;
 		fotoMaeFemea = null;
 		fotoPaiFemea = null;
-		resultados =  new HashMap<Integer, ArrayList<String>>();
+		resultados =  new HashMap<Integer, String>();
 		ultimaPosVazia = new HashMap<>();
 		ultimaPosVazia.put("lin", 14);
 		ultimaPosVazia.put("col", 0);
@@ -223,10 +217,6 @@ public class CadastroLayoutController {
 		maeFemeaImageView.setImage(noFotoImage);
 		machoImageView.setImage(noFotoImage);
 		femeaImageView.setImage(noFotoImage);
-	}
-
-	public void setPrevStage(Stage stage) {
-		this.prevStage = stage;
 	}
 
 	public void cancelar() {
@@ -395,9 +385,10 @@ public class CadastroLayoutController {
 
 	public void addResultado() {
 		shiftAdicionarLink();
-		criarViews();
-		shiftUltimaPosVazia();
 		resultCount++;
+		criarViews(resultCount);
+		shiftUltimaPosVazia();
+		System.out.println(resultados.toString());
 	}
 
 	private void shiftUltimaPosVazia() {
@@ -409,13 +400,18 @@ public class CadastroLayoutController {
 		}
 	}
 
-	private void criarViews() {
+	private void criarViews(Integer resultCount) {
 		BorderPane borderPane = new BorderPane();
 		StackPane pane = new StackPane();
 		TextField linhagem = new TextField();
 		ImageView imageView = new ImageView();
 		Button editButton = new Button();
 		Button deleteButton = new Button();
+		
+		linhagem.setId(resultCount+"");
+		imageView.setId(resultCount+"");
+		String resultInfo = linhagem.getText()+" ; ";
+		resultados.put(resultCount,resultInfo);
 		
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -428,6 +424,18 @@ public class CadastroLayoutController {
 			public void handle(ActionEvent event) {
 				deleteFotoResultado(event, imageView);
 			}
+		});
+		
+		linhagem.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				String[] values = resultados.get(Integer.parseInt(linhagem.getId())).split(";");
+				System.out.println(values.length);
+				values[0] = newValue;
+				resultados.put(Integer.parseInt(linhagem.getId()), values[0].trim()+" ; "+values[1].trim());
+			}
+			
 		});
 		
 		Image noFotoImage = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
@@ -463,18 +471,16 @@ public class CadastroLayoutController {
 
 	private void addFotoResultado(ActionEvent event, ImageView imageView, String linhagem) {
 		File file = abrirFileChooser();
-		String imageName = ID+String.format("_result_%d", resultCount)+file.getName();
+		Integer resultCountInt = Integer.parseInt(imageView.getId());
+		String imageName = ID+String.format("_result_%d", resultCountInt)+file.getName();
 		String path = imagesDir+imageName;
-		imageView.setId(resultCount+"");
 		File newFile = new File(path);
 		try {
 			BufferedImage bufferedImage = ImageIO.read(file);
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null); 
 			imageView.setImage(image);
-			ArrayList<String> resultInfo = new ArrayList<String>();
-			resultInfo.add(linhagem);
-			resultInfo.add(imageName);
-			resultados.put(resultCount,resultInfo);
+			String resultInfo = linhagem+" ; "+imageName;
+			resultados.put(resultCountInt,resultInfo);
 			ImageIO.write(bufferedImage,file.getName().substring(file.getName().length()-3), newFile);
 		}catch (IOException ex) {
 			Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
@@ -483,17 +489,17 @@ public class CadastroLayoutController {
 	
 	private void deleteFotoResultado(ActionEvent event, ImageView imageView) {
 		Image image = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
-		ArrayList<String> values = resultados.get(Integer.parseInt(imageView.getId()));
-		String imageName = values.get(1);
+		String[] values = resultados.get(Integer.parseInt(imageView.getId())).split(";");
+		String imageName = values[1].trim();
 		File file = null;
 		
 		imageView.setImage(image);
 		file = new File(imagesDir+imageName);
-		
 		if(file.exists()){
 			file.delete();
-			values.set(1, "");
-			resultados.put(Integer.parseInt(imageView.getId()), values);
+			values[1] = "";
+			String valuesString = values[0].trim()+" ; "+values[1].trim();
+			resultados.put(Integer.parseInt(imageView.getId()), valuesString);
 		}
 	}
 	

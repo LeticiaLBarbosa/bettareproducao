@@ -1,27 +1,17 @@
 package application.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import application.util.LocalDateAdapter;
-import application.model.ListWraper;
-
+import application.util.XmlGenericMapAdapter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableMap;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.MapProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleMapProperty;
 
 public class Reproducao {
 	private final StringProperty ID;
@@ -43,8 +33,8 @@ public class Reproducao {
 	private final ObjectProperty<LocalDate> retirada_femea;
 	private final ObjectProperty<LocalDate> retirada_macho;
 	private final StringProperty informacoes;
-	@XmlElementWrapper(name = "wrapperList")
-	private final Map<Integer, ListWraper> resultados;
+	@XmlJavaTypeAdapter(XmlGenericMapAdapter.class)
+	private Map<Integer, String> resultados;
 	private ObjectProperty<LocalDate> ultimaAtualizacao;
 
 	public Reproducao() {
@@ -56,7 +46,7 @@ public class Reproducao {
 			String femea, String infoMacho, String infoFemea, String linhagem_paiMacho, String linhagem_maeMacho,
 			String linhagem_paiFemea, String linhagem_maeFemea, String linhagem_macho, String linhagem_femea,
 			LocalDate inicio, LocalDate retirada_femea, LocalDate retirada_macho, String informacoes,
-			HashMap<Integer,ArrayList<String>> resultados) {
+			HashMap<Integer,String> resultados) {
 		this.ID = new SimpleStringProperty(ID);
 		this.pai_macho = new SimpleStringProperty(pai_macho);
 		this.mae_macho = new SimpleStringProperty(mae_macho);
@@ -76,7 +66,7 @@ public class Reproducao {
 		this.retirada_femea = new SimpleObjectProperty<LocalDate>(retirada_femea);
 		this.retirada_macho = new SimpleObjectProperty<LocalDate>(retirada_macho);
 		this.informacoes = new SimpleStringProperty(informacoes);
-		this.resultados = new HashMap<Integer, ListWraper>();
+		setResultados(resultados);
 		this.ultimaAtualizacao = new SimpleObjectProperty<LocalDate>();
 	}
 
@@ -224,17 +214,12 @@ public class Reproducao {
 		this.informacoes.set(informacoes);
 	}
 
-	public Map<Integer, ListWraper> getResultados() {
-		return resultados;
+	public Map<Integer, String> getResultados() {
+		return this.resultados;
 	}
 
-	public void setResultados(HashMap<Integer, ArrayList<String>> resultados) {
-		for (Integer key : resultados.keySet()) {
-			ArrayList<String> value = resultados.get(key);
-			ListWraper listWraper = new ListWraper();
-			listWraper.setList(value);
-			this.resultados.put(key, listWraper);
-		}
+	public void setResultados(HashMap<Integer, String> resultados) {
+		this.resultados = resultados;
 	}
 
 	public String getInfoMacho() {
