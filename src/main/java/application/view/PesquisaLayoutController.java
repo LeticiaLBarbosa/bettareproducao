@@ -1,5 +1,6 @@
 package application.view;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import application.Main;
@@ -7,11 +8,16 @@ import application.model.Reproducao;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class PesquisaLayoutController {
 	
@@ -61,6 +67,9 @@ public class PesquisaLayoutController {
 		retiradaFemeaColumn.setCellValueFactory(cellData -> cellData.getValue().getRetirada_femeaProperty());
 		retiradaMachoColumn.setCellValueFactory(cellData -> cellData.getValue().getRetirada_machoProperty());
 		ultimaAtualizacaoColumn.setCellValueFactory(cellData -> cellData.getValue().getUltimaAtualizacaoProperty());
+		
+		 tabelaReproducoes.getSelectionModel().selectedItemProperty().addListener(
+		            (observable, oldValue, newValue) -> mostrarReproducao(newValue));
 	}
 	
 	public void setMain(Main main) {
@@ -118,6 +127,43 @@ public class PesquisaLayoutController {
 
 	public void cancelar(){
 		main.showInitialLayout();
+	}
+	
+	/**
+	 * Fills all text fields to show details about the person.
+	 * If the specified person is null, all text fields are cleared.
+	 * 
+	 * @param person the person or null
+	 * @return 
+	 */
+	private boolean mostrarReproducao(Reproducao reproducao) {
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(Main.class.getResource("view/OverviewLayout.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Edit Person");
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(main.getPrimaryStage());
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        // Set the person into the controller.
+	        ReproducaoOverviewController controller = loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        controller.setReproducao(reproducao);
+
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+
+	        return controller.isOkClicked();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 }

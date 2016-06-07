@@ -1,11 +1,13 @@
 package application.view;
 
 import application.Main;
+import application.model.Reproducao;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class ReproducaoOverviewController {
 	
@@ -55,6 +57,9 @@ public class ReproducaoOverviewController {
 
     // Reference to the main application.
     private Main main;
+    private Stage stage;
+    private Reproducao reproducao;
+    private boolean okClicked = false;
 
     /**
      * The constructor.
@@ -80,5 +85,43 @@ public class ReproducaoOverviewController {
      */
     public void setMain(Main main) {
         this.main = main;
+    }
+
+	public void setDialogStage(Stage dialogStage) {
+		stage = dialogStage;
+	}
+
+	public void setReproducao(Reproducao reproducao) {
+		this.reproducao = reproducao;
+		
+		
+	}
+
+	public boolean isOkClicked() {
+		return okClicked;
+	}
+	
+	/**
+     * Called when the user clicks ok.
+     */
+    @FXML
+    private void handleOk() {
+//        person.setFirstName(firstNameField.getText());
+//        person.setLastName(lastNameField.getText());
+//        person.setStreet(streetField.getText());
+//        person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
+//        person.setCity(cityField.getText());
+//        person.setBirthday(DateUtil.parse(birthdayField.getText()));
+
+        okClicked = true;
+        stage.close();
+    }
+
+    /**
+     * Called when the user clicks cancel.
+     */
+    @FXML
+    private void handleCancel() {
+        stage.close();
     }
 }

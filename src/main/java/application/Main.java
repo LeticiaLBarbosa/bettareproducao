@@ -64,10 +64,6 @@ public class Main extends Application {
 	public void showPesquisaLayout() {
 		changeView("view/PesquisaLayout.fxml", "Pesquisa", 3);
 	}
-	
-	public void showOverviewLayout() {
-		changeView("view/OverviewLayout.fxml", "Visualização de ficha", 4);
-	}
 
 	private void changeView(String fxmlFile, String title, Integer id) {
 		try {
@@ -109,12 +105,6 @@ public class Main extends Application {
 				System.out.println("entrou pesquisa");
 				System.out.println(this.getClass().getName());
 				controller3.setMain(this);
-				break;
-			case 4:
-				ReproducaoOverviewController controller4;
-				System.out.println("entrou overview");
-				controller4 = loader.getController();
-				controller4.setMain(this);
 				break;
 			}
 			
