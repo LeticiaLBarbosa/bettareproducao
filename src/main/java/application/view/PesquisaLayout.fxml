@@ -12,7 +12,7 @@
       <DatePicker fx:id="retiradaFemeaDatePicker" layoutX="424.0" layoutY="48.0" promptText="Retirada da Fêmea" AnchorPane.rightAnchor="20.0" />
       <DatePicker fx:id="retiradaMachoDatePicker" layoutX="20.0" layoutY="94.0" promptText="Retirada do Macho" />
       <DatePicker fx:id="ultimaAtualizacaoDatePicker" layoutX="219.0" layoutY="94.0" promptText="Ultima Atualização" />
-      <Button layoutX="472.0" layoutY="94.0" mnemonicParsing="false" text="Pesquisar" />
+      <Button fx:id="pesquisarButton" layoutX="472.0" layoutY="94.0" mnemonicParsing="false" onAction="#pesquisar" text="Pesquisar" />
       <TableView fx:id="tabelaReproducoes" layoutX="21.0" layoutY="134.0" prefHeight="526.0" prefWidth="572.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
@@ -25,6 +25,6 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="530.0" layoutY="667.0" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="cancelarButton" layoutX="530.0" layoutY="667.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
    </children>
 </AnchorPane>

@@ -4,17 +4,20 @@ import java.time.LocalDate;
 
 import application.Main;
 import application.model.Reproducao;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class PesquisaLayoutController {
 	
 	@FXML
 	private TextField idTextField;
+	
 	@FXML
 	private DatePicker inicioDatePicker;
 	@FXML
@@ -23,6 +26,7 @@ public class PesquisaLayoutController {
 	private DatePicker retiradaFemeaDatePicker;
 	@FXML
 	private DatePicker ultimaAtualizacaoDatePicker;
+	
 	@FXML
 	private TableView<Reproducao> tabelaReproducoes;
 	@FXML
@@ -35,41 +39,85 @@ public class PesquisaLayoutController {
     private TableColumn<Reproducao, LocalDate> retiradaFemeaColumn;
     @FXML
     private TableColumn<Reproducao, LocalDate> ultimaAtualizacaoColumn;
+    
+    @FXML
+    private Button pesquisarButton;
+    @FXML
+    private Button cancelarButton;
 	
 	private Main main;
 	
-	private Stage stage;
+	private FilteredList<Reproducao> filteredData;
 	
 	public PesquisaLayoutController(){
 		
 	}
 	
-	 @FXML
-	    private void initialize() {
-	        // Initialize the person table with the two columns.
-	        idColumn.setCellValueFactory(cellData -> cellData.getValue().getIDProperty());
-	        inicioColumn.setCellValueFactory(cellData -> cellData.getValue().getInicioProperty());
-	        retiradaFemeaColumn.setCellValueFactory(cellData -> cellData.getValue().getRetirada_femeaProperty());
-	        retiradaMachoColumn.setCellValueFactory(cellData -> cellData.getValue().getRetirada_machoProperty());
-	        ultimaAtualizacaoColumn.setCellValueFactory(cellData -> cellData.getValue().getUltimaAtualizacaoProperty());
-	    }
+	@FXML
+	private void initialize() {
+		// Initialize the person table with the two columns.
+		idColumn.setCellValueFactory(cellData -> cellData.getValue().getIDProperty());
+		inicioColumn.setCellValueFactory(cellData -> cellData.getValue().getInicioProperty());
+		retiradaFemeaColumn.setCellValueFactory(cellData -> cellData.getValue().getRetirada_femeaProperty());
+		retiradaMachoColumn.setCellValueFactory(cellData -> cellData.getValue().getRetirada_machoProperty());
+		ultimaAtualizacaoColumn.setCellValueFactory(cellData -> cellData.getValue().getUltimaAtualizacaoProperty());
+	}
 	
 	public void setMain(Main main) {
 		this.main = main;
 		tabelaReproducoes.setItems(main.getReproducaoData());
-	}
-	
-	public void setPrevStage(Stage stage) {
-		this.stage = stage;
-		
+		filteredData = new FilteredList<Reproducao>(main.getReproducaoData(), p -> true);
 	}
 	
 	public void pesquisar(){
+		clearValue(inicioDatePicker);
+		clearValue(retiradaFemeaDatePicker);
+		clearValue(retiradaMachoDatePicker);
+		clearValue(ultimaAtualizacaoDatePicker);
+		filteredData.setPredicate(reproducao -> {
+			// If filter text is empty, display all persons.
+			if(!(idTextField == null || idTextField.getText().isEmpty()) &&
+            	!reproducao.getID().contains(idTextField.getText())){
+            	return false;
+            }
+			if(inicioDatePicker.getValue() != null){
+				if (!reproducao.getInicio().toString().equals(inicioDatePicker.getValue().toString())){
+					return false;
+				}
+			}
+			if(!(retiradaFemeaDatePicker.getValue() == null || retiradaFemeaDatePicker.getValue().toString().isEmpty()) &&
+            	!reproducao.getRetirada_femea().toString().equals(retiradaFemeaDatePicker.getValue().toString())){
+            	return false;
+			}
+            if(!(retiradaMachoDatePicker.getValue() == null || retiradaMachoDatePicker.getValue().toString().isEmpty()) &&
+                !reproducao.getRetirada_macho().toString().equals(retiradaMachoDatePicker.getValue())){
+            	return false;
+    		}
+            if((ultimaAtualizacaoDatePicker.getValue() != null) &&
+               !ultimaAtualizacaoDatePicker.getValue().toString().equals(reproducao.getUltimaAtualizacao().toString())){
+            	return false;
+    		}
+            return true;
+        });
 		
+		SortedList<Reproducao> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tabelaReproducoes.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tabelaReproducoes.setItems(sortedData);
+        filteredData = new FilteredList<Reproducao>(main.getReproducaoData(), p -> true);
 	}
 	
+	private void clearValue(DatePicker datePicker) {
+		if(datePicker.getEditor().getText().trim().equals("")){
+			datePicker.setValue(null);
+		}
+	}
+
 	public void cancelar(){
-		
+		main.showInitialLayout();
 	}
 
 }
