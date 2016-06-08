@@ -1,66 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ReproducaoOverviewController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ReproducaoOverviewController">
    <children>
-      <ScrollPane fitToWidth="true" layoutY="14.0" prefHeight="700.0" prefWidth="612.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutY="14.0" prefHeight="700.0" prefWidth="617.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <Pane prefHeight="1000.0" prefWidth="600.0">
+            <AnchorPane>
                <children>
-                  <Label layoutX="159.0" layoutY="15.0" text="FICHA DE ACOMPANHAMENTO DE REPRODUÇÃO" />
-                  <Label fx:id="idLabel" layoutX="245.0" layoutY="41.0" text="ID da Reproduçao" />
-                  <Label layoutX="111.0" layoutY="65.0" text="Pais do Macho" />
-                  <Label layoutX="415.0" layoutY="65.0" text="Pais da Fêmea" />
-                  <Label fx:id="linhagemPaiMachoLabel" layoutX="39.0" layoutY="90.0" text="(LINHAGEM)" />
-                  <Label fx:id="linhagemPaiFemeaLabel" layoutX="490.0" layoutY="90.0" text="(LINHAGEM)" />
-                  <Label fx:id="linhagemMachoLabel" layoutX="89.0" layoutY="218.0" text="(Linhagem do Macho)" />
-                  <Label fx:id="linhagemFemeaLabel" layoutX="396.0" layoutY="218.0" text="(Linhagem da Fêmea)" />
-                  <Label fx:id="linhagemMaeMachoLabel" layoutX="188.0" layoutY="90.0" text="(LINHAGEM)" />
-                  <Label fx:id="linhagemMaeFemeaLabel" layoutX="345.0" layoutY="90.0" text="(LINHAGEM)" />
-                  <ImageView fx:id="paiMachoImageView" fitHeight="100.0" fitWidth="142.5" layoutX="5.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="maeMachoImageView" fitHeight="100.0" fitWidth="142.5" layoutX="150.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="maeFemeaImageView" fitHeight="100.0" fitWidth="142.5" layoutX="452.5" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="paiFemeaImageView" fitHeight="100.0" fitWidth="142.5" layoutX="307.5" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="femeaImageView" fitHeight="150.0" fitWidth="290.0" layoutX="5.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="machoImageView" fitHeight="150.0" fitWidth="290.0" layoutX="295.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
-                  <TextField alignment="CENTER" layoutX="218.0" layoutY="37.0" promptText="ID de Reprodução" visible="false" />
-                  <Label fx:id="infoMachoLabel" layoutX="72.0" layoutY="392.0" text="(F? / Idade / Reprodução nº?)" />
-                  <Label fx:id="infoFemeaLabel" layoutX="375.0" layoutY="392.0" text="(F? / Idade / Reprodução nº?)" />
-                  <Label layoutX="10.0" layoutY="418.0" text="Data de Início:" />
-                  <Label layoutX="10.0" layoutY="440.0" text="Retirada da fêmea:" />
-                  <Label layoutX="10.0" layoutY="462.0" text="Retirada do macho:" />
-                  <Label layoutX="10.0" layoutY="484.0" text="Informações adicionais:" />
-                  <Label fx:id="inicioLabel" layoutX="95.58" layoutY="418.0" text="DD/MM/AAAA" />
-                  <Label fx:id="retiradaFemeaLabel" layoutX="118.97" layoutY="440.0" text="DD/MM/AAAA" />
-                  <Label fx:id="retiradaMachoLabel" layoutX="122.95" layoutY="462.0" text="DD/MM/AAAA" />
-                  <TextArea fx:id="aditionalInfoTextArea" editable="false" layoutX="10.0" layoutY="501.0" prefHeight="42.0" prefWidth="572.0" />
-                  <Label layoutX="278.0" layoutY="555.0" text="RESULTADOS" />
-                  <GridPane fx:id="resultadosGridPane" alignment="CENTER" layoutX="9.0" layoutY="580.0" prefWidth="575.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <GridPane fx:id="gridPane" prefWidth="600.0">
                      <children>
-                        <ImageView fitHeight="100.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                        <ImageView fitHeight="100.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="100.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-                        <ImageView fitHeight="100.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+                        <Label text="FICHA DE ACOMPANHAMENTO DE REPRODUÇÃO" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
+                        <Label fx:id="idLabel" text="Reproducao ID" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
+                        <Label text="Pais do Macho" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.vgrow="NEVER" />
+                        <Label text="Pais da Fêmea" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.vgrow="NEVER" />
+                        <TextField fx:id="linhagemPaiMachoTextField" alignment="CENTER" disable="true" editable="false" focusTraversable="false" opacity="0.73" prefHeight="25.0" prefWidth="129.0" promptText="Linhagem" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="linhagemMaeMachoTextField" alignment="CENTER" disable="true" editable="false" focusTraversable="false" opacity="0.73" promptText="Linhagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="linhagemPaiFemeaTextField" alignment="CENTER" disable="true" editable="false" focusTraversable="false" opacity="0.73" promptText="Linhagem" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="linhagemMaeFemeaTextField" alignment="CENTER" disable="true" editable="false" focusTraversable="false" opacity="0.73" promptText="Linhagem" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <ImageView fx:id="paiMachoImageView" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="NEVER">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                        <ImageView fx:id="maeMachoImageView" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="NEVER" />
+                        <ImageView fx:id="paiFemeaImageView" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="NEVER" />
+                        <ImageView fx:id="maeFemeaImageView" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="NEVER" />
+                        <TextField fx:id="linhagemMachoTextField" alignment="CENTER" editable="false" focusTraversable="false" opacity="0.73" prefHeight="25.0" prefWidth="140.0" promptText="Linhagem do Macho" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.vgrow="NEVER">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="linhagemFemeaTextField" alignment="CENTER" disable="true" editable="false" focusTraversable="false" opacity="0.73" prefWidth="140.0" promptText="Linhagem da Fêmea" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <ImageView fx:id="machoImageView" fitHeight="149.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <ImageView fx:id="femeaImageView" fitHeight="149.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <TextField fx:id="infoMachoTextField" alignment="CENTER" disable="true" editable="false" focusTraversable="false" opacity="0.73" prefHeight="25.0" prefWidth="140.0" promptText="F? / Idade? / Reprodução nº?" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="infoFemeaTextField" alignment="CENTER" disable="true" editable="false" focusTraversable="false" opacity="0.73" prefHeight="25.0" prefWidth="140.0" promptText="F? / Idade? / Reprodução nº?" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label text="Data de início:" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Retirada do Macho:" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Retirada da Fêmea:" GridPane.rowIndex="10">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Informações Adicionais:" GridPane.rowIndex="11">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <DatePicker fx:id="inicioDatePicker" disable="true" editable="false" focusTraversable="false" opacity="0.73" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </DatePicker>
+                        <DatePicker fx:id="retiradaMachoDatePicker" disable="true" editable="false" focusTraversable="false" opacity="0.73" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </DatePicker>
+                        <DatePicker fx:id="retiradaFemeaDatePicker" disable="true" editable="false" focusTraversable="false" opacity="0.73" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </DatePicker>
+                        <TextArea fx:id="aditionalInfoTextArea" disable="true" editable="false" focusTraversable="false" opacity="0.73" prefHeight="40.0" prefWidth="200.0" promptText="Informação adicional" GridPane.columnSpan="2147483647" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="12">
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </TextArea>
+                        <Label text="Resultados" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="13" />
+                        <Button fx:id="imprimirButton" mnemonicParsing="false" onAction="#imprimir" text="Imprimir" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="15">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="cancelarButton" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="15">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" right="87.0" top="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="editarButton" mnemonicParsing="false" onAction="#editar" text="Editar" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="15">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" right="169.0" top="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="deletarButton" mnemonicParsing="false" onAction="#deletar" text="Deletar" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="15">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" right="236.0" top="5.0" />
+                           </GridPane.margin>
+                        </Button>
                      </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints fillHeight="false" maxHeight="39.0" minHeight="25.0" prefHeight="19.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="19.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="86.0" minHeight="25.0" prefHeight="17.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="115.0" minHeight="25.0" prefHeight="28.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="33.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="25.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="32.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
                   </GridPane>
-                  <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" text="Voltar" />
-                  <Button layoutX="530.0" layoutY="702.0" mnemonicParsing="false" text="Editar" />
                </children>
-            </Pane>
+            </AnchorPane>
          </content>
       </ScrollPane>
    </children>

@@ -89,23 +89,26 @@ public class PesquisaLayoutController {
             	!reproducao.getID().contains(idTextField.getText())){
             	return false;
             }
-			if(inicioDatePicker.getValue() != null){
-				if (!reproducao.getInicio().toString().equals(inicioDatePicker.getValue().toString())){
+			if((inicioDatePicker.getValue() != null) && (reproducao.getInicio() != null)){
+				if(!inicioDatePicker.getValue().toString().equals(reproducao.getInicio().toString())){
 					return false;
 				}
 			}
-			if(!(retiradaFemeaDatePicker.getValue() == null || retiradaFemeaDatePicker.getValue().toString().isEmpty()) &&
-            	!reproducao.getRetirada_femea().toString().equals(retiradaFemeaDatePicker.getValue().toString())){
-            	return false;
+			if((retiradaFemeaDatePicker.getValue() != null) && (reproducao.getRetirada_femea() != null)){
+				if(!retiradaFemeaDatePicker.getValue().toString().equals(reproducao.getRetirada_femea().toString())){
+					return false;
+				}
 			}
-            if(!(retiradaMachoDatePicker.getValue() == null || retiradaMachoDatePicker.getValue().toString().isEmpty()) &&
-                !reproducao.getRetirada_macho().toString().equals(retiradaMachoDatePicker.getValue())){
-            	return false;
-    		}
-            if((ultimaAtualizacaoDatePicker.getValue() != null) &&
-               !ultimaAtualizacaoDatePicker.getValue().toString().equals(reproducao.getUltimaAtualizacao().toString())){
-            	return false;
-    		}
+			if((retiradaMachoDatePicker.getValue() != null) && (reproducao.getRetirada_macho() != null)){
+				if(!retiradaMachoDatePicker.getValue().toString().equals(reproducao.getRetirada_macho().toString())){
+					return false;
+				}
+			}
+			if((ultimaAtualizacaoDatePicker.getValue() != null) && (reproducao.getUltimaAtualizacao() != null)){
+				if(!ultimaAtualizacaoDatePicker.getValue().toString().equals(reproducao.getUltimaAtualizacao().toString())){
+					return false;
+				}
+			}
             return true;
         });
 		
