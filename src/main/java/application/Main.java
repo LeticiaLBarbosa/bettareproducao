@@ -49,23 +49,26 @@ public class Main extends Application {
 		File file = getReproducaoFilePath();
         if (file != null && file.exists()) {
             loadReproducaoDataFromFile(file);
-            System.out.println("achou file!");
         }else{
         	file = new File(filePathDir+"database.xml");
         	setReproducaoFilePath(file);
         }
-		changeView("view/InitialLayout.fxml", "BettaReprodução", 1);
+		changeView("view/InitialLayout.fxml", "BettaReprodução", 1, null, primaryStage);
 	}
 	
-	public void showCadastroLayout() {
-		changeView("view/CadastroLayout.fxml", "Cadastro", 2);
+	public void showCadastroLayout(Reproducao reproducao, Stage stage) {
+		changeView("view/CadastroLayout.fxml", "Cadastro", 2, reproducao, stage);
 	}
 
 	public void showPesquisaLayout() {
-		changeView("view/PesquisaLayout.fxml", "Pesquisa", 3);
+		changeView("view/PesquisaLayout.fxml", "Pesquisa", 3, null, primaryStage);
+	}
+	
+	public void showReproducaoOverviewLayout(Reproducao reproducao){
+		changeView("view/OverviewLayout.fxml", "Visualização", 4, reproducao, primaryStage);
 	}
 
-	private void changeView(String fxmlFile, String title, Integer id) {
+	private void changeView(String fxmlFile, String title, Integer id, Reproducao reproducao, Stage stage) {
 		try {
 			// Load pesquisa layout
 			FXMLLoader loader = new FXMLLoader();
@@ -74,40 +77,46 @@ public class Main extends Application {
 
 			// Set pesquisa layout into the center of root layout.
 			Scene scene = new Scene(novoLayout);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle(title);
-			primaryStage.centerOnScreen();
-			primaryStage.sizeToScene();
-			primaryStage.setMaximized(false);
-			primaryStage.show();
+			stage.setScene(scene);
+			stage.setTitle(title);
+			stage.centerOnScreen();
+			stage.sizeToScene();
+			stage.setMaximized(false);
+			stage.show();
 			
 			// Give the controller access to the main app.
 			switch (id) {
 			case 1:
 				InitialLayoutController controller;
+				
 				controller = loader.getController();
-				System.out.println("entrou betta");
 				controller.setMain(this);
+				
 				break;
 			case 2:
 				CadastroLayoutController controller2;
-				controller2 = loader.getController();
-				System.out.println(getReproducaoData().size());
-				System.out.println("entrou cadastro");
 				
-				Reproducao reproducao = new Reproducao();
+				controller2 = loader.getController();
 				controller2.setReproducao(reproducao);
 				controller2.setMain(this);
+				controller2.setStage(stage);
+				
 				break;
 			case 3:
 				PesquisaLayoutController controller3;
+				
 				controller3 = loader.getController();
-				System.out.println("entrou pesquisa");
-				System.out.println(this.getClass().getName());
 				controller3.setMain(this);
+				
 				break;
+			case 4:
+				ReproducaoOverviewController controller4 = loader.getController();
+		        
+				controller4.setReproducao(reproducao);
+		        controller4.setMain(this);
+		        
+		        break;
 			}
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -123,6 +132,7 @@ public class Main extends Application {
     public File getReproducaoFilePath() {
         Preferences prefs = Preferences.userNodeForPackage(Main.class);
         String filePath = prefs.get("filePath", null);
+        
         if (filePath != null) {
             return new File(filePath);
         } else {
@@ -138,9 +148,10 @@ public class Main extends Application {
      */
     public void setReproducaoFilePath(File file) {
         Preferences prefs = Preferences.userNodeForPackage(Main.class);
+        
         if (file != null) {
             prefs.put("filePath", file.getPath());
-            System.out.println("alterou filepath");
+            
             // Update the stage title.
             primaryStage.setTitle("BettaReprodução - " + file.getName());
         } else {
@@ -168,7 +179,6 @@ public class Main extends Application {
 
 	        reproData.clear();
 	        reproData.addAll(wrapper.getReproducoes());
-	        System.out.println(reproData.get(0).getID());
 
 	    } catch (Exception e) { // catches ANY exception
 	        Alert alert = new Alert(AlertType.ERROR);

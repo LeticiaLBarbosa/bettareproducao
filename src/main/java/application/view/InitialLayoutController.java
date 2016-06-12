@@ -26,11 +26,10 @@ public class InitialLayoutController {
 	}
 	
 	public void abrirCadastroLayout() {
-		main.showCadastroLayout();
+		main.showCadastroLayout(null, main.getPrimaryStage());
 	}
 	
 	public void abrirPesquisaLayout() {
-		System.out.println(main.getClass().getName());
 		main.showPesquisaLayout();
 	}
 

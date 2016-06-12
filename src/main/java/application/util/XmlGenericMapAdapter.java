@@ -22,7 +22,7 @@ public class XmlGenericMapAdapter<K, V> extends XmlAdapter<MapType<K, V>, Map<K,
     }
  
     @Override
-    public MapType marshal(Map<K, V> v) throws Exception {
+    public MapType<K, V> marshal(Map<K, V> v) throws Exception {
         MapType<K, V> mapType = new MapType<K, V>();
  
         for (Map.Entry<K, V> entry : v.entrySet()) {

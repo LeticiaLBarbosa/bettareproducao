@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ReproducaoOverviewController {
@@ -79,9 +80,8 @@ public class ReproducaoOverviewController {
     private Main main;
     private Stage stage;
     private Reproducao reproducao;
-    private boolean okClicked = false;
     private Map<String, Integer> ultimaPosVazia = new HashMap<>();
-
+    
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -103,6 +103,35 @@ public class ReproducaoOverviewController {
         });
     }
 
+    @FXML
+    private void imprimir() {
+    	stage.close();
+    }
+    
+    /**
+     * Called when the user clicks cancel.
+     */
+    @FXML
+    private void cancelar() {
+    	stage.close();
+    }
+    
+    @FXML
+    private void editar() {
+    	// Create the dialog Stage.
+    	Stage dialogStage = new Stage();
+    	
+    	dialogStage.initModality(Modality.WINDOW_MODAL);
+    	dialogStage.initOwner(main.getPrimaryStage());
+    	
+    	main.showCadastroLayout(reproducao, dialogStage);
+    }
+    
+    @FXML
+    private void deletar() {
+    	stage.close();
+    }
+    
     /**
      * Is called by the main application to give a reference back to itself.
      * 
@@ -112,14 +141,15 @@ public class ReproducaoOverviewController {
         this.main = main;
     }
 
-	public void setDialogStage(Stage dialogStage) {
-		stage = dialogStage;
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
 	public void setReproducao(Reproducao reproducao) {
 		this.reproducao = reproducao;
 		
 		idLabel.setText(reproducao.getID());
+		
 		linhagemPaiMachoTextField.setText(reproducao.getLinhagemPaiMacho());
 		linhagemMaeMachoTextField.setText(reproducao.getLinhagemMaeMacho());
 		linhagemPaiFemeaTextField.setText(reproducao.getLinhagemPaiFemea());
@@ -128,10 +158,11 @@ public class ReproducaoOverviewController {
 		linhagemFemeaTextField.setText(reproducao.getLinhagemFemea());
 		infoFemeaTextField.setText(reproducao.getInfoFemea());
 		infoMachoTextField.setText(reproducao.getInfoMacho());
+		aditionalInfoTextArea.setText(reproducao.getInformacoes());
+		
 		inicioDatePicker.setValue(reproducao.getInicio());
 		retiradaFemeaDatePicker.setValue(reproducao.getRetirada_femea());
 		retiradaMachoDatePicker.setValue(reproducao.getRetirada_macho());
-		aditionalInfoTextArea.setText(reproducao.getInformacoes());
 		
 		addFoto(paiMachoImageView, reproducao.getPai_macho());
 		addFoto(maeMachoImageView, reproducao.getMae_macho());
@@ -145,10 +176,9 @@ public class ReproducaoOverviewController {
 
 	private void addFoto(ImageView imageView, String foto) {
 		Image noFotoImage = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
-		if(foto != null && !foto.isEmpty()){
-			System.out.println(foto);
+		
+		if(foto != null && !foto.trim().isEmpty()){
 			Image image = new Image(getClass().getResourceAsStream("/uploaded/"+foto));
-			System.out.println(image);
 			imageView.setImage(image);
 		}else{
 			imageView.setImage(noFotoImage);
@@ -158,6 +188,7 @@ public class ReproducaoOverviewController {
 	private void showResultados(Map<Integer, String> resultados) {
 		ultimaPosVazia.put("lin", 14);
 		ultimaPosVazia.put("col", 0);
+		
 		for (Integer key : resultados.keySet()) {
 			shiftButtons();
 			criarViews(resultados.get(key));
@@ -193,17 +224,16 @@ public class ReproducaoOverviewController {
 		Image noFotoImage = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
 	
 		if(resultInfoList[1] != null && !resultInfoList[1].trim().isEmpty()){
-			System.out.println(resultInfoList[1]);
 			imageView.setImage(new Image(getClass().getResourceAsStream("/uploaded/"+resultInfoList[1].trim())));
 		}else{
 			imageView.setImage(noFotoImage);
 		}
+		
 		imageView.setFitHeight(100);
 		imageView.setFitWidth(140);
 		imageView.setPreserveRatio(true);
 		
 		if(resultInfoList[0] != null && !resultInfoList[0].isEmpty()){
-			System.out.println(resultInfoList[0]);
 			linhagem.setText(resultInfoList[0]);
 		}else{
 			linhagem.setPromptText("Linhagem");
@@ -230,42 +260,5 @@ public class ReproducaoOverviewController {
 			ultimaPosVazia.put("col", ultimaPosVazia.get("col") + 1);
 		}
 	}
-
-	public boolean isOkClicked() {
-		return okClicked;
-	}
 	
-	/**
-     * Called when the user clicks ok.
-     */
-    @FXML
-    private void imprimir() {
-//        person.setFirstName(firstNameField.getText());
-//        person.setLastName(lastNameField.getText());
-//        person.setStreet(streetField.getText());
-//        person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
-//        person.setCity(cityField.getText());
-//        person.setBirthday(DateUtil.parse(birthdayField.getText()));
-
-        okClicked = true;
-        stage.close();
-    }
-
-    /**
-     * Called when the user clicks cancel.
-     */
-    @FXML
-    private void cancelar() {
-        stage.close();
-    }
-    
-    @FXML
-    private void editar() {
-        
-    }
-    
-    @FXML
-    private void deletar() {
-        stage.close();
-    }
 }

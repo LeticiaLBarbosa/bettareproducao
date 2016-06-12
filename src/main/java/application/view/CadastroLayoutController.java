@@ -35,6 +35,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class CadastroLayoutController {
 	@FXML
@@ -115,9 +116,6 @@ public class CadastroLayoutController {
 	@FXML
 	private Hyperlink adicionarResultadoHyperlink;
 
-	private Main main;
-	private Reproducao reproducao; 
-
 	private String fotoMacho;
 	private String fotoFemea;
 	private String fotoPaiMacho;
@@ -127,70 +125,95 @@ public class CadastroLayoutController {
 	private String ID = null;
 	private String imagesDir = new String("src/main/resources/uploaded/");
 
+	private Main main;
+	private Reproducao reproducao; 
+	private Stage stage;
 	private HashMap<Integer,String> resultados;
 	private Map<String, Integer> ultimaPosVazia;
-	
-	private int resultCount = 0;
+	private boolean ehEditar = false;
+	private int resultCount;
 
 	public CadastroLayoutController() {
 
-//		machoDeleteButton.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent event) {
-//				remove(fotoMacho.getId)
-//			}
-//		});
-//		
-		
-		fotoMacho = null;
-		fotoFemea = null;
-		fotoPaiMacho = null;
-		fotoMaeFemea = null;
-		fotoPaiFemea = null;
+		if(ehEditar){
+			fotoMacho = reproducao.getMacho();
+			fotoFemea = reproducao.getFemea();
+			fotoPaiMacho = reproducao.getPai_macho();
+			fotoMaeMacho = reproducao.getMae_macho();
+			fotoPaiFemea = reproducao.getPai_femea();
+			fotoMaeFemea = reproducao.getMae_femea();
+			
+		}else{			
+			fotoMacho = null;
+			fotoFemea = null;
+			fotoPaiMacho = null;
+			fotoMaeMacho = null;
+			fotoMaeFemea = null;
+			fotoPaiFemea = null;
+		}
 		resultados =  new HashMap<Integer, String>();
 		ultimaPosVazia = new HashMap<>();
 		ultimaPosVazia.put("lin", 14);
 		ultimaPosVazia.put("col", 0);
-
-	
-		
+		resultCount = resultados.size();
 	}
 
 	@FXML
 	private void initialize() {
-		initEditButtons();
-		initDeleteButtons();
-		initFotos();
 	}
 	
 	public void setReproducao(Reproducao reproducao){
-		this.reproducao = reproducao;
+		if(reproducao == null){
+			ehEditar = false;
+			this.reproducao = new Reproducao();
+		}else{
+			ehEditar = true;
+			this.reproducao = reproducao;
+		}
+		initiateViews();
+	}
+	
+	private void initiateViews(){
+		initEditButtons();
+		initDeleteButtons();
+		initFotos();
+		initEditTexts();
+		if(ehEditar){
+			for(int i = 0; i < reproducao.getResultados().size(); i++){
+				addResultado();				
+			}
+		}
 	}
 	
 	private void setRepID(){
-		int numeroFichas = main.getReproducaoData().size();
-		if (numeroFichas < 1) {
-			ID = "R0001";
-		}else{
-			Reproducao dadoAnterior = main.getReproducaoData().get(numeroFichas-1);
-			int idAtual = Integer.parseInt(dadoAnterior.getID().substring(1)) + 1;
-			if (idAtual > 9){
-				ID = String.format("R00%d",idAtual);
-			}else if (idAtual > 99) {
-				ID = String.format("R0%d",idAtual);
-			}else if (idAtual > 999) {
-				ID = String.format("R%d",idAtual);
-			}else if (idAtual > 9999) {
-				ID = String.format("R%d",idAtual);
+		if(!ehEditar){
+			int numeroFichas = main.getReproducaoData().size();
+			if (numeroFichas < 1) {
+				ID = "R0001";
 			}else{
-				ID = String.format("R000%d",idAtual);
+				Reproducao dadoAnterior = main.getReproducaoData().get(numeroFichas-1);
+				int idAtual = Integer.parseInt(dadoAnterior.getID().substring(1)) + 1;
+				if (idAtual > 9){
+					ID = String.format("R00%d",idAtual);
+				}else if (idAtual > 99) {
+					ID = String.format("R0%d",idAtual);
+				}else if (idAtual > 999) {
+					ID = String.format("R%d",idAtual);
+				}else if (idAtual > 9999) {
+					ID = String.format("R%d",idAtual);
+				}else{
+					ID = String.format("R000%d",idAtual);
+				}
 			}
+		}else{
+			ID = reproducao.getID();
 		}
 		idReproducaoLabel.setText(ID);
 	}
 
 	private void initEditButtons() {
 		Image editImage = new Image(getClass().getResourceAsStream("/edit_icon.png"));
+		
 		paiMachoButton.setGraphic(new ImageView(editImage));
 		maeMachoButton.setGraphic(new ImageView(editImage));
 		paiFemeaButton.setGraphic(new ImageView(editImage));
@@ -201,6 +224,7 @@ public class CadastroLayoutController {
 
 	private void initDeleteButtons() {
 		Image deleteImage = new Image(getClass().getResourceAsStream("/delete_icon.png"));
+		
 		paiMachoDeleteButton.setGraphic(new ImageView(deleteImage));
 		maeMachoDeleteButton.setGraphic(new ImageView(deleteImage));
 		paiFemeaDeleteButton.setGraphic(new ImageView(deleteImage));
@@ -210,17 +234,48 @@ public class CadastroLayoutController {
 	}
 
 	private void initFotos() {
-		Image noFotoImage = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
-		paiMachoImageView.setImage(noFotoImage);
-		maeMachoImageView.setImage(noFotoImage);
-		paiFemeaImageView.setImage(noFotoImage);
-		maeFemeaImageView.setImage(noFotoImage);
-		machoImageView.setImage(noFotoImage);
-		femeaImageView.setImage(noFotoImage);
+		setImageViewsFotos(paiFemeaImageView, reproducao.getPai_femea());
+		setImageViewsFotos(maeFemeaImageView, reproducao.getMae_femea());
+		setImageViewsFotos(paiMachoImageView, reproducao.getPai_macho());
+		setImageViewsFotos(maeMachoImageView, reproducao.getMae_macho());
+		setImageViewsFotos(femeaImageView, reproducao.getFemea());
+		setImageViewsFotos(machoImageView, reproducao.getMacho());
+	}
+	
+	private void setImageViewsFotos(ImageView imageView, String imageName){
+		Image image;
+		
+		if(imageName == null || imageName.trim().equals("")){
+			image = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
+		}else{
+			image = new Image(getClass().getResourceAsStream("/uploaded/"+imageName));
+		}
+		
+		imageView.setImage(image);
+	}
+	
+	private void initEditTexts(){
+		linhagemFemeaTextField.setText(reproducao.getLinhagemFemea());
+		linhagemMachoTextField.setText(reproducao.getLinhagemMacho());
+		linhagemPaiFemeaTextField.setText(reproducao.getLinhagemPaiFemea());
+		linhagemMaeFemeaTextField.setText(reproducao.getLinhagemMaeFemea());
+		linhagemPaiMachoTextField.setText(reproducao.getLinhagemPaiMacho());
+		linhagemMaeMachoTextField.setText(reproducao.getLinhagemMaeMacho());
+		infoFemeaTextField.setText(reproducao.getInfoFemea());
+		infoMachoTextField.setText(reproducao.getInfoMacho());
+		informacoesTextArea.setText(reproducao.getInformacoes());
+		
+		inicioDatePicker.setValue(reproducao.getInicio());
+		retiradaFemeaDatePicker.setValue(reproducao.getRetirada_femea());
+		retiradaMachoDatePicker.setValue(reproducao.getRetirada_macho());
 	}
 
 	public void cancelar() {
-		main.showInitialLayout();
+		if(ehEditar){
+			stage.close();
+		}else{
+			main.showInitialLayout();
+		}
 	}
 
 	public void salvar() {
@@ -244,6 +299,7 @@ public class CadastroLayoutController {
 		reproducao.setRetirada_femea(retiradaFemeaDatePicker.getValue());
 		reproducao.setRetirada_macho(retiradaMachoDatePicker.getValue());
 		reproducao.setResultados(resultados);
+		
 		Date input = new Date();
 		LocalDate diaAtual = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		reproducao.setUltimaAtualizacao(diaAtual);
@@ -254,14 +310,21 @@ public class CadastroLayoutController {
 	
 	private void handleSave(){
 		File reproducaoFile = main.getReproducaoFilePath();
-		main.getReproducaoData().add(reproducao);
+		if(ehEditar){
+			for (Reproducao repro : main.getReproducaoData()) {
+				if(repro.getID().equals(reproducao.getID())){
+					main.getReproducaoData().remove(repro);
+					main.getReproducaoData().add(reproducao);
+				}
+			}			
+		}else{
+			main.getReproducaoData().add(reproducao);
+		}
         if (reproducaoFile != null) {
         	main.saveReproducaoDataToFile(reproducaoFile);
-            System.out.println("ja tinha e salvou em cima");
         } else {
         	reproducaoFile = new File("src/main/resources/database.xml");
     		main.saveReproducaoDataToFile(reproducaoFile);
-    		System.out.println("criou e salvou");
         }
 	}
 
@@ -386,10 +449,8 @@ public class CadastroLayoutController {
 
 	public void addResultado() {
 		shiftAdicionarLink();
-		resultCount++;
-		criarViews(resultCount);
+		criarViews();
 		shiftUltimaPosVazia();
-		System.out.println(resultados.toString());
 	}
 
 	private void shiftUltimaPosVazia() {
@@ -401,7 +462,7 @@ public class CadastroLayoutController {
 		}
 	}
 
-	private void criarViews(Integer resultCount) {
+	private void criarViews() {
 		BorderPane borderPane = new BorderPane();
 		StackPane pane = new StackPane();
 		TextField linhagem = new TextField();
@@ -409,10 +470,20 @@ public class CadastroLayoutController {
 		Button editButton = new Button();
 		Button deleteButton = new Button();
 		
+		String resultInfo = "";
+		resultCount = resultados.size()+1;
+		
+		if(reproducao.getResultados().containsKey(resultCount)){
+			linhagem.setText(reproducao.getResultados().get(resultCount).split(";")[0].trim());
+			resultInfo = reproducao.getResultados().get(resultCount);
+		}else{
+			resultInfo = linhagem.getText()+" ; ";
+		}
+		
+		resultados.put(resultCount,resultInfo);
+		
 		linhagem.setId(resultCount+"");
 		imageView.setId(resultCount+"");
-		String resultInfo = linhagem.getText()+" ; ";
-		resultados.put(resultCount,resultInfo);
 		
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -428,7 +499,6 @@ public class CadastroLayoutController {
 		});
 		
 		linhagem.textProperty().addListener(new ChangeListener<String>() {
-
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				String[] values = resultados.get(Integer.parseInt(linhagem.getId())).split(";");
@@ -439,18 +509,22 @@ public class CadastroLayoutController {
 			
 		});
 		
-		Image noFotoImage = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
 		Image editImage = new Image(getClass().getResourceAsStream("/edit_icon.png"));
 		Image deleteImage = new Image(getClass().getResourceAsStream("/delete_icon.png"));
 		
-		imageView.setImage(noFotoImage);
+		String imageName = resultados.get(resultCount).split(";")[1].trim();
+		
+		setImageViewsFotos(imageView, imageName);
+		
 		imageView.setFitHeight(100);
 		imageView.setFitWidth(140);
 		imageView.setPreserveRatio(true);
+		
 		editButton.setGraphic(new ImageView(editImage));
 		deleteButton.setGraphic(new ImageView(deleteImage));
 		deleteButton.setPadding(new Insets(2));
 		editButton.setPadding(new Insets(2));
+		
 		linhagem.setPromptText("Linhagem");
 		
 		pane.getChildren().addAll(imageView, deleteButton, editButton);
@@ -471,11 +545,14 @@ public class CadastroLayoutController {
 	}
 
 	private void addFotoResultado(ActionEvent event, ImageView imageView, String linhagem) {
-		File file = abrirFileChooser();
 		Integer resultCountInt = Integer.parseInt(imageView.getId());
+		File file = abrirFileChooser();
+		
 		String imageName = ID+String.format("_result_%d", resultCountInt)+file.getName().trim();
 		String path = imagesDir+imageName;
+		
 		File newFile = new File(path);
+		
 		try {
 			BufferedImage bufferedImage = ImageIO.read(file);
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null); 
@@ -489,9 +566,9 @@ public class CadastroLayoutController {
 	}
 	
 	private void deleteFotoResultado(ActionEvent event, ImageView imageView) {
-		Image image = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
 		String[] values = resultados.get(Integer.parseInt(imageView.getId())).split(";");
 		String imageName = values[1].trim();
+		Image image = new Image(getClass().getResourceAsStream("/default-no-image.jpg"));
 		File file = null;
 		
 		imageView.setImage(image);
@@ -524,6 +601,10 @@ public class CadastroLayoutController {
 	public void setMain(Main main) {
 		this.main = main;
 		setRepID();		
+	}
+	
+	public void setStage(Stage stage){
+		this.stage = stage;
 	}
 
 }
