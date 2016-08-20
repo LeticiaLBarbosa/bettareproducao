@@ -38,36 +38,27 @@ public class Reproducao {
 	private ObjectProperty<LocalDate> ultimaAtualizacao;
 
 	public Reproducao() {
-		this(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-				null, null);
-	}
-
-	public Reproducao(String ID, String pai_macho, String mae_macho, String pai_femea, String mae_femea, String macho,
-			String femea, String infoMacho, String infoFemea, String linhagem_paiMacho, String linhagem_maeMacho,
-			String linhagem_paiFemea, String linhagem_maeFemea, String linhagem_macho, String linhagem_femea,
-			LocalDate inicio, LocalDate retirada_femea, LocalDate retirada_macho, String informacoes,
-			HashMap<Integer,String> resultados) {
-		this.ID = new SimpleStringProperty(ID);
-		this.pai_macho = new SimpleStringProperty(pai_macho);
-		this.mae_macho = new SimpleStringProperty(mae_macho);
-		this.pai_femea = new SimpleStringProperty(pai_femea);
-		this.mae_femea = new SimpleStringProperty(mae_femea);
-		this.macho = new SimpleStringProperty(macho);
-		this.femea = new SimpleStringProperty(femea);
-		this.infoMacho = new SimpleStringProperty(infoMacho);
-		this.infoFemea = new SimpleStringProperty(infoFemea);
-		this.linhagem_paiMacho = new SimpleStringProperty(linhagem_paiMacho);
-		this.linhagem_maeMacho = new SimpleStringProperty(linhagem_maeMacho);
-		this.linhagem_paiFemea = new SimpleStringProperty(linhagem_paiFemea);
-		this.linhagem_maeFemea = new SimpleStringProperty(linhagem_maeFemea);
-		this.linhagem_femea = new SimpleStringProperty(linhagem_femea);
-		this.linhagem_macho = new SimpleStringProperty(linhagem_macho);
-		this.inicio = new SimpleObjectProperty<LocalDate>(inicio);
-		this.retirada_femea = new SimpleObjectProperty<LocalDate>(retirada_femea);
-		this.retirada_macho = new SimpleObjectProperty<LocalDate>(retirada_macho);
-		this.informacoes = new SimpleStringProperty(informacoes);
-		setResultados(resultados);
-		this.ultimaAtualizacao = new SimpleObjectProperty<LocalDate>();
+		ID = new SimpleStringProperty();
+		pai_macho = new SimpleStringProperty();
+		mae_macho = new SimpleStringProperty();
+		pai_femea = new SimpleStringProperty();
+		mae_femea = new SimpleStringProperty();
+		macho = new SimpleStringProperty();
+		femea = new SimpleStringProperty();
+		infoMacho = new SimpleStringProperty();
+		infoFemea = new SimpleStringProperty();
+		linhagem_paiMacho = new SimpleStringProperty();
+		linhagem_maeMacho = new SimpleStringProperty();
+		linhagem_paiFemea = new SimpleStringProperty();
+		linhagem_maeFemea = new SimpleStringProperty();
+		linhagem_femea = new SimpleStringProperty();
+		linhagem_macho = new SimpleStringProperty();
+		inicio = new SimpleObjectProperty<LocalDate>();
+		retirada_femea = new SimpleObjectProperty<LocalDate>();
+		retirada_macho = new SimpleObjectProperty<LocalDate>();
+		informacoes = new SimpleStringProperty();
+		resultados = new HashMap<>();
+		ultimaAtualizacao = new SimpleObjectProperty<LocalDate>();
 	}
 
 	public String getID() {
@@ -218,7 +209,7 @@ public class Reproducao {
 		return this.resultados;
 	}
 
-	public void setResultados(HashMap<Integer, String> resultados) {
+	public void setResultados(Map<Integer, String> resultados) {
 		this.resultados = resultados;
 	}
 

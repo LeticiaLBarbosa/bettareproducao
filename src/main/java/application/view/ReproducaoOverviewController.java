@@ -9,6 +9,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -105,7 +106,24 @@ public class ReproducaoOverviewController {
 
     @FXML
     private void imprimir() {
-    	stage.close();
+    	System.out.println("Creating a printer job...");
+
+	    PrinterJob job = PrinterJob.createPrinterJob();
+	    
+	    if (job != null) {
+	      System.out.println(job.jobStatusProperty().asString());
+	      System.out.println(gridPane);
+	      job.showPageSetupDialog(stage);
+	      job.showPrintDialog(stage);
+	      boolean printed = job.printPage(stage.getScene().getRoot());
+	      if (printed) {
+	        job.endJob();
+	      } else {
+	        System.out.println("Printing failed.");
+	      }
+	    } else {
+	      System.out.println("Could not create a printer job.");
+	    }
     }
     
     /**
@@ -113,7 +131,7 @@ public class ReproducaoOverviewController {
      */
     @FXML
     private void cancelar() {
-    	stage.close();
+    	main.showPesquisaLayout();
     }
     
     @FXML
@@ -129,14 +147,14 @@ public class ReproducaoOverviewController {
     
     @FXML
     private void deletar() {
-    	stage.close();
+    	main.getReproducaoData().remove(reproducao);
+    	main.showPesquisaLayout();
     }
     
     /**
      * Is called by the main application to give a reference back to itself.
-     * 
-     * @param mainApp
-     */
+     *
+	 */
     public void setMain(Main main) {
         this.main = main;
     }

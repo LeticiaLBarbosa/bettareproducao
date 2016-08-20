@@ -128,7 +128,7 @@ public class CadastroLayoutController {
 	private Main main;
 	private Reproducao reproducao; 
 	private Stage stage;
-	private HashMap<Integer,String> resultados;
+	private Map<Integer,String> resultados;
 	private Map<String, Integer> ultimaPosVazia;
 	private boolean ehEditar = false;
 	private int resultCount;
@@ -142,7 +142,6 @@ public class CadastroLayoutController {
 			fotoMaeMacho = reproducao.getMae_macho();
 			fotoPaiFemea = reproducao.getPai_femea();
 			fotoMaeFemea = reproducao.getMae_femea();
-			
 		}else{			
 			fotoMacho = null;
 			fotoFemea = null;
@@ -150,8 +149,7 @@ public class CadastroLayoutController {
 			fotoMaeMacho = null;
 			fotoMaeFemea = null;
 			fotoPaiFemea = null;
-		}
-		resultados =  new HashMap<Integer, String>();
+        }
 		ultimaPosVazia = new HashMap<>();
 		ultimaPosVazia.put("lin", 14);
 		ultimaPosVazia.put("col", 0);
@@ -472,10 +470,10 @@ public class CadastroLayoutController {
 		
 		String resultInfo = "";
 		resultCount = resultados.size()+1;
-		
-		if(reproducao.getResultados().containsKey(resultCount)){
-			linhagem.setText(reproducao.getResultados().get(resultCount).split(";")[0].trim());
-			resultInfo = reproducao.getResultados().get(resultCount);
+
+		if(resultados.containsKey(resultCount)){
+			linhagem.setText(resultados.get(resultCount).split(";")[0].trim());
+			resultInfo = resultados.get(resultCount);
 		}else{
 			resultInfo = linhagem.getText()+" ; ";
 		}

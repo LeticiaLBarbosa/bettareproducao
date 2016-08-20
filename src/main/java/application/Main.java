@@ -114,6 +114,7 @@ public class Main extends Application {
 		        
 				controller4.setReproducao(reproducao);
 		        controller4.setMain(this);
+		        controller4.setStage(stage);
 		        
 		        break;
 			}
